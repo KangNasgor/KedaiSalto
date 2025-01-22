@@ -18,7 +18,9 @@ class ProductResource extends Resource
 {
     protected static ?string $model = Product::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-shopping-cart';
+    protected static ?string $activeNavigationIcon = 'heroicon-s-shopping-cart';
+    protected static ?string $navigationGroup = 'Data';
 
     public static function form(Form $form): Form
     {
@@ -30,7 +32,7 @@ class ProductResource extends Resource
                 Forms\Components\Select::make('type')->options([
                     'food' => 'Food',
                     'drink' => 'Drink',
-                ])->native(false),
+                ])->required(),
             ]);
     }
 
@@ -74,6 +76,10 @@ class ProductResource extends Resource
         return [
             //
         ];
+    }
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
     }
 
     public static function getPages(): array
