@@ -19,6 +19,11 @@
         "vite": "^6.0"
     },
     "dependencies": {
+        "@fortawesome/fontawesome-svg-core": "^6.7.2",
+        "@fortawesome/free-brands-svg-icons": "^6.7.2",
+        "@fortawesome/free-regular-svg-icons": "^6.7.2",
+        "@fortawesome/free-solid-svg-icons": "^6.7.2",
+        "@fortawesome/react-fontawesome": "^0.2.2",
         "@inertiajs/inertia": "^0.11.1",
         "@inertiajs/inertia-react": "^0.8.1",
         "@inertiajs/progress": "^0.2.7",

@@ -1,16 +1,12 @@
 import React from 'react'
-import { Head, Link } from '@inertiajs/inertia-react'
-import Sidebar from './components/sidebar';
+import { Head } from '@inertiajs/inertia-react'
+import Sidebar from '../Pages/components/Sidebar'
 
 export default function Homepage() {
     return (
         <div>
             <Sidebar />
-            <div className="flex justify-center items-center flex-col">
-                <Head title="Welcome" />
-                <h1 className="text-black">Welcome</h1>
-                <p>Homepage</p>
-                <Link href="/about">About this web</Link>
+            <div className="h-screen bg-[#FFB42D]">
             </div>
         </div>
     )
