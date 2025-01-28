@@ -14,6 +14,10 @@ export default {
         extend: {
             fontFamily: {
                 poppins: ['Poppins', 'Sans-Serif'],
+                jua: ['Jua', 'sans-serif'],
+            },
+            backgroundImage: {
+                hero: "url('/public/asset/dumpling-hero.jpg')",
             },
         },
     },
