@@ -18,6 +18,9 @@ export default {
             },
             backgroundImage: {
                 hero: "url('/public/asset/dumpling-hero.jpg')",
+                eslumut: "url('/public/asset/eslumut.jpg')",
+                dimsum: "url('/public/asset/dimsum.jpg')",
+                mashpotato: "url('/public/asset/mashed-potato.jpg')",
             },
         },
     },
