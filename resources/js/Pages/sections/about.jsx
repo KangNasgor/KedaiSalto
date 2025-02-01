@@ -43,9 +43,17 @@ function EsLumut({prev, next}) {
                 <div className='bg-eslumut h-56 w-full rounded-2xl bg-cover bg-center mb-5'></div>
                 <FontAwesomeIcon icon={faArrowRight} className='text-xl absolute block right-0 md:h-5 h-full opacity-0 md:opacity-100 md:-right-10 hover:scale-125 active:scale-110 transition-all duration-200' onClick={next}/>
             </div>
-            <div className='flex gap-5 justify-center mb-5 md:mb-1'>
-                <FontAwesomeIcon icon={faArrowLeft} className='text-xl block md:hidden hover:scale-125 active:scale-110 transition-all duration-200' onClick={prev}/>
-                <FontAwesomeIcon icon={faArrowRight} className='text-xl block md:hidden hover:scale-125 active:scale-110 transition-all duration-200' onClick={next}/>
+            <div className='flex gap-0 justify-center mb-5 md:mb-1 md:hidden'>
+                <div className='active:scale-90'>
+                    <div className='p-3 bg-[#FF2E2E] clip-parallelogram-left rounded-s-md'>
+                        <FontAwesomeIcon icon={faArrowLeft} className='text-xl text-white hover:scale-125 active:scale-110 transition-all duration-200' onClick={prev}/>
+                    </div>
+                </div>
+                <div className='active:scale-90'>
+                    <div className='p-3 bg-[#FF2E2E] clip-parallelogram-right rounded-e-md'>
+                        <FontAwesomeIcon icon={faArrowRight} className='text-xl text-white hover:scale-125 active:scale-110 transition-all duration-200' onClick={next}/>
+                    </div>
+                </div>
             </div>
             <h1 className='text-[#FF2E2E] font-jua text-3xl mb-1'>Es Lumut</h1>
             <p className='text-[#FF2E2E] font-jua text-lg mb-5'>
@@ -65,9 +73,13 @@ function Dimsum({prev, next}) {
                 <div className='bg-dimsum h-56 w-full rounded-2xl bg-cover bg-center mb-5'></div>
                 <FontAwesomeIcon icon={faArrowRight} className='text-xl absolute block right-0 md:h-5 h-full opacity-0 md:opacity-100 md:-right-10 hover:scale-125 active:scale-110 transition-all duration-200' onClick={next}/>
             </div>
-            <div className='flex gap-5 justify-center mb-5 md:mb-1'>
-                <FontAwesomeIcon icon={faArrowLeft} className='text-xl block md:hidden hover:scale-125 active:scale-110 transition-all duration-200' onClick={prev}/>
-                <FontAwesomeIcon icon={faArrowRight} className='text-xl block md:hidden hover:scale-125 active:scale-110 transition-all duration-200' onClick={next}/>
+            <div className='flex gap-0 justify-center mb-5 md:mb-1 md:hidden'>
+                <div className='p-3 bg-[#FF2E2E] clip-parallelogram-left rounded-s-md'>
+                    <FontAwesomeIcon icon={faArrowLeft} className='text-xl text-white hover:scale-125 active:scale-110 transition-all duration-200' onClick={prev}/>
+                </div>
+                <div className='p-3 bg-[#FF2E2E] clip-parallelogram-right rounded-e-md'>
+                    <FontAwesomeIcon icon={faArrowRight} className='text-xl text-white hover:scale-125 active:scale-110 transition-all duration-200' onClick={next}/>
+                </div>
             </div>
             <h1 className='text-[#FF2E2E] font-jua text-3xl mb-1'>Dimsum</h1>
             <p className='text-[#FF2E2E] font-jua text-lg mb-5'>
@@ -87,9 +99,13 @@ function MashedPotato({prev, next}) {
                 <div className='bg-mashpotato h-56 w-full rounded-2xl bg-cover bg-center mb-5'></div>
                 <FontAwesomeIcon icon={faArrowRight} className='text-xl absolute block right-0 md:h-5 h-full opacity-0 md:opacity-100 md:-right-10 hover:scale-125 active:scale-110 transition-all duration-200' onClick={next}/>
             </div>
-            <div className='flex gap-5 justify-center mb-5 md:mb-1'>
-                <FontAwesomeIcon icon={faArrowLeft} className='text-xl block md:hidden hover:scale-125 active:scale-110 transition-all duration-200' onClick={prev}/>
-                <FontAwesomeIcon icon={faArrowRight} className='text-xl block md:hidden hover:scale-125 active:scale-110 transition-all duration-200' onClick={next}/>
+            <div className='flex gap-0 justify-center mb-5 md:mb-1 md:hidden'>
+                <div className='p-3 bg-[#FF2E2E] clip-parallelogram-left rounded-s-md'>
+                    <FontAwesomeIcon icon={faArrowLeft} className='text-xl text-white hover:scale-125 active:scale-110 transition-all duration-200' onClick={prev}/>
+                </div>
+                <div className='p-3 bg-[#FF2E2E] clip-parallelogram-right rounded-e-md'>
+                    <FontAwesomeIcon icon={faArrowRight} className='text-xl text-white hover:scale-125 active:scale-110 transition-all duration-200' onClick={next}/>
+                </div>
             </div>
             <h1 className='text-[#FF2E2E] font-jua text-3xl mb-1'>Mashed Potatoes</h1>
             <p className='text-[#FF2E2E] font-jua text-lg mb-5'>
