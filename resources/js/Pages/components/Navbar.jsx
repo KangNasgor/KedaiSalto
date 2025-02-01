@@ -19,3 +19,5 @@ export default function Navbar(){
         </div>
     );
 }
+
+// Position relative makes the underline effect matches the text's length

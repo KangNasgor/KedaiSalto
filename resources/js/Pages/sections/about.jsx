@@ -39,19 +39,19 @@ function EsLumut({prev, next}) {
     return (
         <div>
             <div className='flex items-center gap-5 h-fit relative'>
-                <FontAwesomeIcon icon={faArrowLeft} className='text-xl absolute hidden md:block -left-10 hover:scale-125 active:scale-110 transition-all duration-200' onClick={prev}/>
-                <div className='bg-eslumut h-56 w-full rounded-2xl bg-cover bg-center mb-8'></div>
-                <FontAwesomeIcon icon={faArrowRight} className='text-xl absolute hidden md:block -right-10 hover:scale-125 active:scale-110 transition-all duration-200' onClick={next}/>
+                <FontAwesomeIcon icon={faArrowLeft} className='text-xl absolute block left-0 md:h-5 h-full opacity-0 md:opacity-100 md:-left-10 hover:scale-125 active:scale-110 transition-all duration-200' onClick={prev}/>
+                <div className='bg-eslumut h-56 w-full rounded-2xl bg-cover bg-center mb-5'></div>
+                <FontAwesomeIcon icon={faArrowRight} className='text-xl absolute block right-0 md:h-5 h-full opacity-0 md:opacity-100 md:-right-10 hover:scale-125 active:scale-110 transition-all duration-200' onClick={next}/>
             </div>
-            <div className='flex gap-5 justify-around mb-5'>
+            <div className='flex gap-5 justify-center mb-5 md:mb-1'>
                 <FontAwesomeIcon icon={faArrowLeft} className='text-xl block md:hidden hover:scale-125 active:scale-110 transition-all duration-200' onClick={prev}/>
                 <FontAwesomeIcon icon={faArrowRight} className='text-xl block md:hidden hover:scale-125 active:scale-110 transition-all duration-200' onClick={next}/>
             </div>
-            <h1 className='text-[#FF2E2E] text-center md:text-left font-jua text-3xl mb-1'>Es Lumut</h1>
-            <p className='text-[#FF2E2E] text-center md:text-left font-jua text-lg mb-5'>
+            <h1 className='text-[#FF2E2E] font-jua text-3xl mb-1'>Es Lumut</h1>
+            <p className='text-[#FF2E2E] font-jua text-lg mb-5'>
                 Minuman segar dengan tekstur unik dan rasa manis yang pas, menghadirkan sensasi lembut dan menyegarkan di setiap tegukan.
             </p>
-            <Link href="/" className='font-jua bg-[#FF2E2E] text-white px-4 py-3 rounded-lg block mx-auto w-fit'>
+            <Link href="/" className='font-jua bg-[#FF2E2E] text-white px-4 py-3 rounded-lg block mx-auto md:static md:mx-0 w-fit'>
                 BUY NOW
             </Link>
         </div>
@@ -60,16 +60,20 @@ function EsLumut({prev, next}) {
 function Dimsum({prev, next}) {
     return (
         <div>
-            <div className='flex items-center gap-5 relative'>
-                <FontAwesomeIcon icon={faArrowLeft} className='text-xl absolute hidden md:block -left-10 hover:scale-125 active:scale-110 transition-all duration-200' onClick={prev}/>
-                <div className='bg-dimsum h-56 w-full rounded-2xl bg-cover bg-center mb-8'></div>
-                <FontAwesomeIcon icon={faArrowRight} className='text-xl absolute hidden md:block -right-10 hover:scale-125 active:scale-110 transition-all duration-200' onClick={next}/>
+            <div className='flex items-center gap-5 h-fit relative'>
+                <FontAwesomeIcon icon={faArrowLeft} className='text-xl absolute block left-0 md:h-5 h-full opacity-0 md:opacity-100 md:-left-10 hover:scale-125 active:scale-110 transition-all duration-200' onClick={prev}/>
+                <div className='bg-dimsum h-56 w-full rounded-2xl bg-cover bg-center mb-5'></div>
+                <FontAwesomeIcon icon={faArrowRight} className='text-xl absolute block right-0 md:h-5 h-full opacity-0 md:opacity-100 md:-right-10 hover:scale-125 active:scale-110 transition-all duration-200' onClick={next}/>
+            </div>
+            <div className='flex gap-5 justify-center mb-5 md:mb-1'>
+                <FontAwesomeIcon icon={faArrowLeft} className='text-xl block md:hidden hover:scale-125 active:scale-110 transition-all duration-200' onClick={prev}/>
+                <FontAwesomeIcon icon={faArrowRight} className='text-xl block md:hidden hover:scale-125 active:scale-110 transition-all duration-200' onClick={next}/>
             </div>
             <h1 className='text-[#FF2E2E] font-jua text-3xl mb-1'>Dimsum</h1>
             <p className='text-[#FF2E2E] font-jua text-lg mb-5'>
                 Dimsum lezat dengan isian gurih dan kulit yang lembut, dibuat dari bahan pilihan untuk menghadirkan cita rasa autentik di setiap gigitan.
             </p>
-            <Link href="/" className='font-jua bg-[#FF2E2E] text-white px-4 py-3 rounded-lg'>
+            <Link href="/" className='font-jua bg-[#FF2E2E] text-white px-4 py-3 rounded-lg block mx-auto md:static md:mx-0 w-fit'>
                 BUY NOW
             </Link>
         </div>
@@ -78,16 +82,20 @@ function Dimsum({prev, next}) {
 function MashedPotato({prev, next}) {
     return (
         <div>
-            <div className='flex items-center gap-5 relative'>
-                <FontAwesomeIcon icon={faArrowLeft} className='text-xl absolute hidden md:block -left-10 hover:scale-125 active:scale-110 transition-all duration-200' onClick={prev}/>
-                <div className='bg-mashpotato h-56 w-full rounded-2xl bg-cover bg-center mb-8'></div>
-                <FontAwesomeIcon icon={faArrowRight} className='text-xl absolute hidden md:block -right-10 hover:scale-125 active:scale-110 transition-all duration-200' onClick={next}/>
+            <div className='flex items-center gap-5 h-fit relative'>
+                <FontAwesomeIcon icon={faArrowLeft} className='text-xl absolute block left-0 md:h-5 h-full opacity-0 md:opacity-100 md:-left-10 hover:scale-125 active:scale-110 transition-all duration-200' onClick={prev}/>
+                <div className='bg-mashpotato h-56 w-full rounded-2xl bg-cover bg-center mb-5'></div>
+                <FontAwesomeIcon icon={faArrowRight} className='text-xl absolute block right-0 md:h-5 h-full opacity-0 md:opacity-100 md:-right-10 hover:scale-125 active:scale-110 transition-all duration-200' onClick={next}/>
+            </div>
+            <div className='flex gap-5 justify-center mb-5 md:mb-1'>
+                <FontAwesomeIcon icon={faArrowLeft} className='text-xl block md:hidden hover:scale-125 active:scale-110 transition-all duration-200' onClick={prev}/>
+                <FontAwesomeIcon icon={faArrowRight} className='text-xl block md:hidden hover:scale-125 active:scale-110 transition-all duration-200' onClick={next}/>
             </div>
             <h1 className='text-[#FF2E2E] font-jua text-3xl mb-1'>Mashed Potatoes</h1>
             <p className='text-[#FF2E2E] font-jua text-lg mb-5'>
                 Mashed potato creamy dengan tekstur lembut dan rasa gurih, dibuat dari kentang pilihan untuk sensasi lezat di setiap suapan.
             </p>
-            <Link href="/" className='font-jua bg-[#FF2E2E] text-white px-4 py-3 rounded-lg'>
+            <Link href="/" className='font-jua bg-[#FF2E2E] text-white px-4 py-3 rounded-lg block mx-auto md:static md:mx-0 w-fit'>
                 BUY NOW
             </Link>
         </div>
