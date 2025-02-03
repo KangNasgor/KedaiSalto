@@ -1,6 +1,6 @@
 import React from 'react'
-import Hero from '../Pages/sections/hero'
-import About from '../Pages/sections/about'
+import Hero from './sections/hero'
+import About from './sections/about'
 import { Head } from '@inertiajs/inertia-react'
 
 export default function Homepage() {
