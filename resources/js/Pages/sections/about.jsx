@@ -18,7 +18,7 @@ export default function About() {
         2: <MashedPotato prev={onCarouselPrev} next={onCarouselNext}/>,
     };
     return (
-        <div className='h-fit lg:h-screen bg-[#FFB42D] py-24 flex flex-col-reverse lg:flex-row items-center' id='about'>
+        <div className='h-fit lg:h-screen bg-[#FFB42D] py-24 flex flex-col-reverse justify-evenly lg:flex-row items-center' id='about'>
             <div className='w-full lg:w-6/12'>
                 <div className='lg:pl-20 mx-auto w-10/12'>
                     {product[activeProduct]}
@@ -74,11 +74,15 @@ function Dimsum({prev, next}) {
                 <FontAwesomeIcon icon={faArrowRight} className='text-xl absolute block right-0 md:h-5 h-full opacity-0 md:opacity-100 md:-right-10 hover:scale-125 active:scale-110 transition-all duration-200' onClick={next}/>
             </div>
             <div className='flex gap-0 justify-center mb-5 md:mb-1 md:hidden'>
-                <div className='p-3 bg-[#FF2E2E] clip-parallelogram-left rounded-s-md'>
-                    <FontAwesomeIcon icon={faArrowLeft} className='text-xl text-white hover:scale-125 active:scale-110 transition-all duration-200' onClick={prev}/>
+                <div className='active:scale-90'>
+                    <div className='p-3 bg-[#FF2E2E] clip-parallelogram-left rounded-s-md'>
+                        <FontAwesomeIcon icon={faArrowLeft} className='text-xl text-white hover:scale-125 active:scale-110 transition-all duration-200' onClick={prev}/>
+                    </div>
                 </div>
-                <div className='p-3 bg-[#FF2E2E] clip-parallelogram-right rounded-e-md'>
-                    <FontAwesomeIcon icon={faArrowRight} className='text-xl text-white hover:scale-125 active:scale-110 transition-all duration-200' onClick={next}/>
+                <div className='active:scale-90'>
+                    <div className='p-3 bg-[#FF2E2E] clip-parallelogram-right rounded-e-md'>
+                        <FontAwesomeIcon icon={faArrowRight} className='text-xl text-white hover:scale-125 active:scale-110 transition-all duration-200' onClick={next}/>
+                    </div>
                 </div>
             </div>
             <h1 className='text-[#FF2E2E] font-jua text-3xl mb-1'>Dimsum</h1>
@@ -100,11 +104,15 @@ function MashedPotato({prev, next}) {
                 <FontAwesomeIcon icon={faArrowRight} className='text-xl absolute block right-0 md:h-5 h-full opacity-0 md:opacity-100 md:-right-10 hover:scale-125 active:scale-110 transition-all duration-200' onClick={next}/>
             </div>
             <div className='flex gap-0 justify-center mb-5 md:mb-1 md:hidden'>
-                <div className='p-3 bg-[#FF2E2E] clip-parallelogram-left rounded-s-md'>
-                    <FontAwesomeIcon icon={faArrowLeft} className='text-xl text-white hover:scale-125 active:scale-110 transition-all duration-200' onClick={prev}/>
+                <div className='active:scale-90'>
+                    <div className='p-3 bg-[#FF2E2E] clip-parallelogram-left rounded-s-md'>
+                        <FontAwesomeIcon icon={faArrowLeft} className='text-xl text-white hover:scale-125 active:scale-110 transition-all duration-200' onClick={prev}/>
+                    </div>
                 </div>
-                <div className='p-3 bg-[#FF2E2E] clip-parallelogram-right rounded-e-md'>
-                    <FontAwesomeIcon icon={faArrowRight} className='text-xl text-white hover:scale-125 active:scale-110 transition-all duration-200' onClick={next}/>
+                <div className='active:scale-90'>
+                    <div className='p-3 bg-[#FF2E2E] clip-parallelogram-right rounded-e-md'>
+                        <FontAwesomeIcon icon={faArrowRight} className='text-xl text-white hover:scale-125 active:scale-110 transition-all duration-200' onClick={next}/>
+                    </div>
                 </div>
             </div>
             <h1 className='text-[#FF2E2E] font-jua text-3xl mb-1'>Mashed Potatoes</h1>

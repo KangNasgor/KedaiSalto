@@ -44,6 +44,12 @@ export default function Sidebar() {
                         <p className="w-fit text-white font-semibold font-jua tracking-wide text-md">About</p>
                     </div>
                 </Link>
+                <Link href="/product">
+                    <div className={`text-black py-5 pl-5 w-11/12 mx-auto rounded-md items-center flex gap-4 transform transition-all duration-200 hover:bg-white/20 ${url === "/about" ? "bg-white/20" : "bg-none"}`}>
+                        <FontAwesomeIcon icon={faCircleInfo} className="text-md text-white"/>
+                        <p className="w-fit text-white font-semibold font-jua tracking-wide text-md">Product</p>
+                    </div>
+                </Link>
             </div>
         </div>
     );
