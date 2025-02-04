@@ -44,13 +44,13 @@ export default function Sidebar() {
                         <p className="w-fit text-white font-semibold font-jua tracking-wide text-md">About</p>
                     </div>
                 </Link>
-                <Link href="/product">
+                <Link href="/user/product">
                     <div className={`text-black py-5 pl-5 w-11/12 mx-auto rounded-md items-center flex gap-4 transform transition-all duration-200 hover:bg-white/20 ${url === "/about" ? "bg-white/20" : "bg-none"}`}>
                         <FontAwesomeIcon icon={faBowlFood} className="text-md text-white"/>
                         <p className="w-fit text-white font-semibold font-jua tracking-wide text-md">Product</p>
                     </div>
                 </Link>
-                <Link href="/account">
+                <Link href="/user/account">
                     <div className={`text-black py-5 pl-5 w-11/12 mx-auto rounded-md items-center flex gap-4 transform transition-all duration-200 hover:bg-white/20 ${url === "/about" ? "bg-white/20" : "bg-none"}`}>
                         <FontAwesomeIcon icon={faUser} className="text-md text-white"/>
                         <p className="w-fit text-white font-semibold font-jua tracking-wide text-md">Account</p>

@@ -30,7 +30,7 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->path('admin')
-            ->login(\App\Filament\Pages\Auth\Login::class) 
+            ->login() 
             ->colors([
                 'primary' => Color::Emerald,
             ])

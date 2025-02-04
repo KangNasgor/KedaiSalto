@@ -1,6 +1,4 @@
 import React from 'react'
-import Hero from './sections/hero'
-import About from './sections/about'
 import { Head, Link } from '@inertiajs/inertia-react'
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
