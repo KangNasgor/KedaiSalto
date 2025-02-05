@@ -7,8 +7,8 @@ use App\Http\Controllers\Controller;
 
 class AccountDetailsController extends Controller{
     public function accountView(){
-        if(Auth::check()){
-            $user = Auth::user();
+        if(Auth::guard('user')->check()){
+            $user = Auth::guard('user')->user();
             return Inertia::render('account', compact('user'));
         }
         else{

@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 // Controller import
 use App\Http\Controllers\LoginController;
@@ -18,7 +17,7 @@ Route::post('/user/register/store', [RegisterController::class, 'register']);
 Route::get('/user/product', [ProductController::class, 'productView']);
 
 Route::controller(LoginController::class)->group(function(){
-    Route::get('/user/login',  'index');
+    Route::get('/user/login',  'index')->name('login');
     Route::post('/user/login/store', 'login');
 });
 // Back End
