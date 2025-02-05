@@ -7,7 +7,10 @@ use Inertia\Inertia;
 
 class LoginController extends Controller
 {
-    public function loginView(){
+    public function index(){
         return Inertia::render('login');
+    }
+    public function login(){
+        
     }
 }

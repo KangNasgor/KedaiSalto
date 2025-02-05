@@ -1,9 +1,10 @@
 import React from 'react'
-import { Head, Link } from '@inertiajs/inertia-react'
+import { Head, Link, usePage } from '@inertiajs/inertia-react'
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 export default function Account() {
+    const { user } = usePage().props;
     return (
         <div className='h-screen bg-[#FFB42D] flex items-center'>
             <Link href='/' className='absolute top-2 left-3 flex gap-3 items-center'>
@@ -16,11 +17,11 @@ export default function Account() {
                 <form className='w-full grid gap-x-24 gap-y-5 grid-cols-2'>
                     <div className='flex flex-col'>
                         <label className='font-jua text-[#FF2E2E]'>Nama</label>
-                        <input className='rounded-md pl-2 py-1 text-sm disabled:bg-white' disabled={true} placeholder='John Smith'/>
+                        <input className='rounded-md pl-2 py-1 text-sm disabled:bg-white' disabled={true} placeholder={user.name}/>
                     </div>
                     <div className='flex flex-col'>
                         <label className='font-jua text-[#FF2E2E]'>Alamat Email</label>
-                        <input className='rounded-md pl-2 py-1 text-sm disabled:bg-white' disabled={true} placeholder='johnsmith@gmail.com'/>
+                        <input className='rounded-md pl-2 py-1 text-sm disabled:bg-white' disabled={true} placeholder={user.email}/>
                     </div>
                     <div className='flex flex-col'>
                         <label className='font-jua text-[#FF2E2E]'>Nomor Telepon</label>
