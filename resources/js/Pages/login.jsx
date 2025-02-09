@@ -1,12 +1,15 @@
 import React, {useState} from 'react'
 import Hero from './sections/hero'
 import About from './sections/about'
-import { Head, Link } from '@inertiajs/inertia-react'
+import { Head, Link, usePage } from '@inertiajs/inertia-react'
 import { faArrowLeft, faEnvelope, faLock, faPhone, faUser } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Inertia } from '@inertiajs/inertia'
 
 export default function Login() {
+
+    const props = usePage().props
+
     const [formData, setFormData] = useState({
         email: '',
         password: '',
@@ -20,7 +23,9 @@ export default function Login() {
     }
     const handleSubmit = (e) => {
         e.preventDefault();
-        Inertia.post('/user/login/store', formData);
+        formData._token = document.querySelector('meta[name="csrf-token"]').content;
+        Inertia.post('/user/login/store', formData, {
+        });
     }
     return (
         <div className='h-screen bg-[#FFB42D] flex items-center'>

@@ -19,8 +19,8 @@ class LoginController extends Controller
         }
         else{
             if(Auth::guard('user')->attempt(['email' => $req->input('email'), 'password' => $req->input('password')])){
-                Auth::login($user);
-                return redirect()->route('homepage');
+                $isLoggedIn = Auth::guard('user')->check() ? true : false;
+                return redirect()->route('homepage', compact('isLoggedIn'));
             }
             else{
                 return redirect()->route('login')->with('message', 'Invalid Credentials');

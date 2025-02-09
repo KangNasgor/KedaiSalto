@@ -16,7 +16,7 @@ Route::get('/user/register', [RegisterController::class, 'index'])->name('regist
 Route::post('/user/register/store', [RegisterController::class, 'register']);
 Route::get('/user/product', [ProductController::class, 'productView']);
 Route::get('/user/logout', function(){
-    Auth::logout();
+    Auth::guard('user')->logout();
     return redirect()->route('register');
 });
 Route::controller(LoginController::class)->group(function(){

@@ -1,12 +1,12 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Sidebar from '../components/Sidebar'
 import Navbar from '../components/Navbar'
-import { Link } from '@inertiajs/inertia-react'
+import { Link, usePage } from '@inertiajs/inertia-react'
 
 export default function Hero() {
     return (
         <div className="h-screen bg-[#FFB42D] ">
-            <Sidebar />
+            <Sidebar/>
             <Navbar />
             <h1 className='absolute right-3 sm:left-3 top-2 text-white font-jua text-2xl sm:mt-1 w-fit'>Kedai Salto</h1>
             <div className='sm:flex bg-hero bg-cover bg-center sm:bg-none'>

@@ -25,7 +25,7 @@ export default function Account() {
                     </div>
                     <div className='flex flex-col'>
                         <label className='font-jua text-[#FF2E2E]'>Nomor Telepon</label>
-                        <input className='rounded-md pl-2 py-1 text-sm disabled:bg-white' disabled={true} placeholder='08123456789'/>
+                        <input className='rounded-md pl-2 py-1 text-sm disabled:bg-white' disabled={true} placeholder={user.notelp}/>
                     </div>
                     <div className='flex flex-col'>
                         <label className='font-jua text-[#FF2E2E]'>Password</label>

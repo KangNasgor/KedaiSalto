@@ -5,7 +5,7 @@ import { faCircleInfo, faHouse, faBowlFood, faUser } from "@fortawesome/free-sol
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 
-export default function Sidebar() {
+export default function Sidebar({ user }) {
     const bar1 = useRef(null);
     const bar2 = useRef(null);
     const bar3 = useRef(null);
