@@ -7,10 +7,10 @@ export default function Account() {
     const { user } = usePage().props;
     return (
         <div className='h-screen bg-[#FFB42D] flex items-center'>
-            <Link href='/' className='absolute top-2 left-3 flex gap-3 items-center'>
+            <div onClick={() => {history.back()}} className='absolute top-2 left-3 flex gap-3 items-center cursor-pointer'>
                 <FontAwesomeIcon icon={faArrowLeft} className='text-2xl bg-[#FF2E2E] p-2 rounded-full text-white'/>
                 <h1 className='font-jua text-[#FF2E2E] text-3xl'>Back</h1>
-            </Link>
+            </div>
             <Head title='DapurSalto'/>
             <div className='w-6/12 mx-auto'>
                 <h1 className='font-jua text-[#FF2E2E] text-4xl mx-auto w-fit mb-5'>Account Details</h1>
