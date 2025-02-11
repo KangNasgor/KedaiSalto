@@ -6,7 +6,7 @@ import { Head, usePage } from '@inertiajs/inertia-react'
 export default function Homepage() {
     return (
         <div className=''>
-            <Head title='DapurSalto'/>
+            <Head title='Kedai Salto'/>
             <Hero />
             <About />
         </div>

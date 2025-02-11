@@ -17,7 +17,7 @@ use App\Models\Product;
 class UserResource extends Resource
 {
     protected static ?string $model = User::class;
-    protected static ?string $navigationLabel = 'Admin';
+    protected static ?string $navigationLabel = 'User';
 
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
     protected static ?string $activeNavigationIcon = 'heroicon-c-user-group';

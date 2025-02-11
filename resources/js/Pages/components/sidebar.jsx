@@ -1,11 +1,35 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useRef } from 'react';
 import { Link,usePage } from "@inertiajs/inertia-react";
-import { faCircleInfo, faHouse, faBowlFood, faUser } from "@fortawesome/free-solid-svg-icons";
+import { faCircleInfo, faHouse, faBowlFood, faUser, faBasketShopping, faUserSlash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 
-export default function Sidebar({ user }) {
+export default function Sidebar() {
+    const [user, setUser] = useState(null);
+    useEffect(() => {
+        fetch('api/user/check', {
+            credentials: 'same-origin',
+            headers: {
+                'Accept' : 'application/json'
+            }
+        })
+            .then(response => {
+                if(response.status === 404){
+                    return {'loggedIn' : false};
+                }
+                else{
+                    return response.json();
+                }
+            })
+            .then(data => {
+                data ?
+                    setUser(data.loggedIn) : setUser('null');
+            })
+            .catch(error => {
+                console.error('Error fetching data : ' + error)
+            })
+    }, []);
     const bar1 = useRef(null);
     const bar2 = useRef(null);
     const bar3 = useRef(null);
@@ -38,24 +62,40 @@ export default function Sidebar({ user }) {
                         <p className="w-fit text-white font-semibold font-jua tracking-wide text-md">Home</p>
                     </div>  
                 </Link>
-                <Link href="#about">
-                    <div className={`text-black py-5 pl-5 w-11/12 mx-auto rounded-md items-center flex gap-4 transform transition-all duration-200 hover:bg-white/20 ${url === "/about" ? "bg-white/20" : "bg-none"}`}>
-                        <FontAwesomeIcon icon={faCircleInfo} className="text-md text-white"/>
-                        <p className="w-fit text-white font-semibold font-jua tracking-wide text-md">About</p>
+                <Link href="/user/keranjang">
+                    <div className={`text-black py-5 pl-5 w-11/12 mx-auto rounded-md items-center flex gap-4 transform transition-all duration-200 hover:bg-white/20 ${url === "/user/keranjang" ? "bg-white/20" : "bg-none"}`}>
+                        <FontAwesomeIcon icon={faBasketShopping} className="text-md text-white"/>
+                        <p className="w-fit text-white font-semibold font-jua tracking-wide text-md">Keranjang</p>
                     </div>
                 </Link>
                 <Link href="/user/product">
-                    <div className={`text-black py-5 pl-5 w-11/12 mx-auto rounded-md items-center flex gap-4 transform transition-all duration-200 hover:bg-white/20 ${url === "/about" ? "bg-white/20" : "bg-none"}`}>
+                    <div className={`text-black py-5 pl-5 w-11/12 mx-auto rounded-md items-center flex gap-4 transform transition-all duration-200 hover:bg-white/20 ${url === "/user/product" ? "bg-white/20" : "bg-none"}`}>
                         <FontAwesomeIcon icon={faBowlFood} className="text-md text-white"/>
                         <p className="w-fit text-white font-semibold font-jua tracking-wide text-md">Product</p>
                     </div>
                 </Link>
                 <Link href="/user/account">
-                    <div className={`text-black py-5 pl-5 w-11/12 mx-auto rounded-md items-center flex gap-4 transform transition-all duration-200 hover:bg-white/20 ${url === "/about" ? "bg-white/20" : "bg-none"}`}>
+                    <div className={`text-black py-5 pl-5 w-11/12 mx-auto rounded-md items-center flex gap-4 transform transition-all duration-200 hover:bg-white/20 ${url === "/user/account" ? "bg-white/20" : "bg-none"}`}>
                         <FontAwesomeIcon icon={faUser} className="text-md text-white"/>
                         <p className="w-fit text-white font-semibold font-jua tracking-wide text-md">Account</p>
                     </div>
                 </Link>
+                {
+                    user === true ?
+                    <Link href="/user/logout">
+                        <div className={`text-black py-5 pl-5 w-11/12 mx-auto rounded-md items-center flex gap-4 transform transition-all duration-200 hover:bg-white/20 ${url === "/user/login" ? "bg-white/20" : "bg-none"}`}>
+                            <FontAwesomeIcon icon={faUserSlash} className="text-md text-white"/>
+                            <p className="w-fit text-white font-semibold font-jua tracking-wide text-md">Logout</p>
+                        </div>
+                    </Link>
+                    :
+                    <Link href="/user/login">
+                        <div className={`text-black py-5 pl-5 w-11/12 mx-auto rounded-md items-center flex gap-4 transform transition-all duration-200 hover:bg-white/20 ${url === "/user/login" ? "bg-white/20" : "bg-none"}`}>
+                            <FontAwesomeIcon icon={faUser} className="text-md text-white"/>
+                            <p className="w-fit text-white font-semibold font-jua tracking-wide text-md">Login</p>
+                        </div>
+                    </Link>
+                }
             </div>
         </div>
     );

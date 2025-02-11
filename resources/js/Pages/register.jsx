@@ -3,11 +3,14 @@ import Hero from './sections/hero'
 import About from './sections/about'
 import { Head, Link } from '@inertiajs/inertia-react'
 import { faArrowLeft, faEnvelope, faLock, faPhone, faUser } from '@fortawesome/free-solid-svg-icons'
+import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Inertia } from '@inertiajs/inertia'
 import { useState } from 'react'
 
 export default function Register() {
+    const [show, setShow] = useState(false);
+
     const [formData, setFormData] = useState({
         name : '',
         email: '',
@@ -22,6 +25,7 @@ export default function Register() {
             [key] : value,
         }));
     }
+
     const handleSubmit = (e) => {
         e.preventDefault();
         Inertia.post('/user/register/store', formData, {
@@ -30,6 +34,8 @@ export default function Register() {
             },
         });
     }
+
+    const toggleShowPassword = () => setShow(prev => !prev);
     return (
         <div className='h-screen bg-[#FFB42D] flex items-center'>
             <Head title='DapurSalto' />
@@ -61,7 +67,8 @@ export default function Register() {
                         <label className='font-jua text-[#FF2E2E] text-lg'>Password</label>
                         <div className='flex items-center gap-2 bg-white rounded-md px-3 py-1'>
                             <FontAwesomeIcon icon={faLock} />
-                            <input className='bg-transparent pl-2 py-1 font-jua outline-none text-sm' type='password' placeholder='********' name='password' value={formData.password} onChange={handleChange}/>
+                            <input className='bg-transparent w-full pl-2 py-1 font-jua outline-none text-sm' type={show === false ? 'password' : 'text'} placeholder='********' name='password' value={formData.password} onChange={handleChange}/>
+                            <FontAwesomeIcon icon={show === false ? faEye : faEyeSlash} onClick={toggleShowPassword}/>
                         </div>
                     </div>
                     <button type='submit' className='block mt-5 mx-auto bg-[#FF2E2E] hover:bg-[#FFB42D] sm:hover:bg-[#FBD288] rounded-xl w-fit px-4 py-3 text-[#FFB42D] hover:text-[#FF2E2E] hover:scale-110 active:scale-105 font-jua transition-all duration-200 ease-in-out mb-4'>
