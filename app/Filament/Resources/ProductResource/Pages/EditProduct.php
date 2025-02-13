@@ -2,9 +2,10 @@
 
 namespace App\Filament\Resources\ProductResource\Pages;
 
-use App\Filament\Resources\ProductResource;
 use Filament\Actions;
+use Illuminate\Support\Facades\Storage;
 use Filament\Resources\Pages\EditRecord;
+use App\Filament\Resources\ProductResource;
 
 class EditProduct extends EditRecord
 {

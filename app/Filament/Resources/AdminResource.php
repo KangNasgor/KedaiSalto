@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\CustomerResource\Pages;
-use App\Filament\Resources\CustomerResource\RelationManagers;
-use App\Models\Customer;
+use App\Filament\Resources\AdminResource\Pages;
+use App\Filament\Resources\AdminResource\RelationManagers;
+use App\Models\Admin;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -12,23 +12,24 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Forms\Components\TextInput;
+use Filament\Tables\Columns\TextColumn;
 
-
-class CustomerResource extends Resource
+class AdminResource extends Resource
 {
-    protected static ?string $model = Customer::class;
+    protected static ?string $model = Admin::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-user';
-    protected static ?string $activeNavigationIcon = 'heroicon-c-user';
-    protected static ?string $navigationGroup = 'Client';
+    protected static ?string $navigationIcon = 'heroicon-o-user-plus';
+    protected static ?string $activeNavigationIcon = 'heroicon-s-user-plus';
+    
+    protected static ?string $navigationGroup = 'Data';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')->required()->maxLength(255)->label('Name'),
-                Forms\Components\TextInput::make('email_address')->required()->maxLength(255)->label('Email Address'),
-                Forms\Components\TextInput::make('password')->required()->label('Password')->password()->minLength('8'),
+                Forms\Components\TextInput::make('password')->required()->maxLength(255)->label('Password')->password(),
             ]);
     }
 
@@ -36,12 +37,10 @@ class CustomerResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('id')->label('ID')->sortable(),
-                Tables\Columns\TextColumn::make('name')->label('Name')->searchable()->sortable(),
-                Tables\Columns\TextColumn::make('email_address')->label('Email Address')->searchable(),
+                TextColumn::make('name')->label('Name'),
             ])
             ->filters([
-                Tables\Filters\TrashedFilter::make(),
+                //
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
@@ -68,15 +67,15 @@ class CustomerResource extends Resource
     {
         return static::getModel()::count();
     }
+
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListCustomers::route('/'),
-            'create' => Pages\CreateCustomer::route('/create'),
-            'edit' => Pages\EditCustomer::route('/{record}/edit'),
+            'index' => Pages\ListAdmins::route('/'),
+            'create' => Pages\CreateAdmin::route('/create'),
+            'edit' => Pages\EditAdmin::route('/{record}/edit'),
         ];
     }
-
     public static function getEloquentQuery(): Builder
     {
         return parent::getEloquentQuery()

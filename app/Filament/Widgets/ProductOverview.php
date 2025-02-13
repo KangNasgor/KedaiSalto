@@ -11,8 +11,8 @@ class ProductOverview extends BaseWidget
     protected function getStats(): array
     {
         return [
-            Stat::make('Total Food', Product::query()->where('type', 'food')->count()),
-            Stat::make('Total Drink', Product::query()->where('type', 'drink')->count()),
+            Stat::make('Stock Dumpling', Product::where('name', 'Dumpling')->value('stock')),
+            Stat::make('Stock Es Lumut', Product::where('name', 'Es Lumut')->value('stock')),
         ];
     }
 }

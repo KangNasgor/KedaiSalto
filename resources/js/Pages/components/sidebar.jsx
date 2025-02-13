@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 export default function Sidebar() {
     const [user, setUser] = useState(null);
     useEffect(() => {
-        fetch(`${window.location.origin}/api/user/check`, {
+        fetch(`${window.location.origin}/api/user/login/check`, {
             credentials: 'same-origin',
             headers: {
                 'Accept' : 'application/json'

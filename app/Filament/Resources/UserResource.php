@@ -21,7 +21,7 @@ class UserResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
     protected static ?string $activeNavigationIcon = 'heroicon-c-user-group';
-    protected static ?string $navigationGroup = 'Data';
+    protected static ?string $navigationGroup = 'Client';
 
     public static function form(Form $form): Form
     {
@@ -30,7 +30,6 @@ class UserResource extends Resource
                 Forms\Components\TextInput::make('name')->required()->maxLength(255)->label('Name'),
                 Forms\Components\TextInput::make('email')->required()->maxLength(255)->label('Email Address'),
                 Forms\Components\TextInput::make('password')->required()->maxLength(255)->label('Password')->password(),
-                Forms\Components\Select::make('product_id')->options(Product::pluck('name', 'id'))->native(false)->label('Product'),
             ]);
     }
 
@@ -41,10 +40,8 @@ class UserResource extends Resource
                 Tables\Columns\TextColumn::make('id')->label('ID')->sortable(),
                 Tables\Columns\TextColumn::make('name')->label('Admin')->searchable()->sortable(),
                 Tables\Columns\TextColumn::make('email')->label('Email Address')->searchable(),
-                Tables\Columns\TextColumn::make('product.name')->label('Product')->searchable(),
             ])
             ->filters([
-                Tables\Filters\SelectFilter::make('product_id')->options(Product::pluck('name', 'id'))->label('Product'),
                 Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([

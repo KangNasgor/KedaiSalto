@@ -6,6 +6,7 @@ import { faArrowLeft, faEnvelope, faLock, faPhone, faUser } from '@fortawesome/f
 import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Inertia } from '@inertiajs/inertia'
+import Navbar from './components/Navbar'
 
 export default function Login() {
     const [show, setShow] = useState(false);
@@ -29,9 +30,10 @@ export default function Login() {
         });
     }
     return (
-        <div className='h-screen bg-[#FFB42D] flex items-center'>
+        <div className='h-screen bg-[#FFB42D]'>
             <Head title='DapurSalto' />
-            <div className='w-6/12 mx-auto'>
+            <Navbar />
+            <div className='w-6/12 left-0 right-0 m-auto absolute top-2/4 transform -translate-y-2/4 '>
                 <h1 className='font-jua text-[#FF2E2E] text-4xl mx-auto w-fit mb-5'>Login</h1>
                 <form className='w-5/12 mx-auto grid gap-x-24 mb-5 gap-y-2 grid-cols-1' method='POST' onSubmit={handleSubmit}>
                     <div>

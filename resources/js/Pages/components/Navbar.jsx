@@ -4,8 +4,9 @@ import React, {useEffect, useState} from "react";
 
 export default function Navbar() {
     const [user, setUser] = useState(null);
+    const { url } = usePage().props;
     useEffect(() => {
-        fetch(`${window.location.origin}/api/user/check`, {
+        fetch(`${window.location.origin}/api/user/login/check`, {
             credentials: 'same-origin',
             headers: {
                 'Accept' : 'application/json'
@@ -42,14 +43,21 @@ export default function Navbar() {
                 account
             </Link>
             {
+                url === '/user/login' ?
+                <Link href="/user/register" className="relative before:h-1 before:absolute before:bg-white before:content-[''] before:w-0 before:bottom-0 before:rounded-md before:hover:w-full before:transition-all before:duration-300">
+                    register
+                </Link> :
+                url === '/user/register' ?
+                <Link href="/user/login" className="relative before:h-1 before:absolute before:bg-white before:content-[''] before:w-0 before:bottom-0 before:rounded-md before:hover:w-full before:transition-all before:duration-300">
+                    login
+                </Link> :
                 user === true ?
-                    <Link href="/user/logout" className="relative before:h-1 before:absolute before:bg-white before:content-[''] before:w-0 before:bottom-0 before:rounded-md before:hover:w-full before:transition-all before:duration-300">
-                        logout
-                    </Link>
-                    :
-                    <Link href="/user/login" className="relative before:h-1 before:absolute before:bg-white before:content-[''] before:w-0 before:bottom-0 before:rounded-md before:hover:w-full before:transition-all before:duration-300">
-                        login
-                    </Link>
+                <Link href="/user/logout" className="relative before:h-1 before:absolute before:bg-white before:content-[''] before:w-0 before:bottom-0 before:rounded-md before:hover:w-full before:transition-all before:duration-300">
+                    logout
+                </Link> :
+                <Link href="/user/login" className="relative before:h-1 before:absolute before:bg-white before:content-[''] before:w-0 before:bottom-0 before:rounded-md before:hover:w-full before:transition-all before:duration-300">
+                    login
+                </Link>
             }
         </div>
     );

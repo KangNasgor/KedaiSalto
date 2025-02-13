@@ -11,7 +11,7 @@ class UserOverview extends BaseWidget
     protected function getStats(): array
     {
         return [
-            Stat::make('Total Admin', User::count()),
+            Stat::make('Total User', User::count()),
         ];
     }
 }

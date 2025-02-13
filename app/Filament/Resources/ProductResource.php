@@ -13,6 +13,10 @@ use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\TextInput;
+use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
+use Filament\Forms\Components\Select;
 
 class ProductResource extends Resource
 {
@@ -26,10 +30,14 @@ class ProductResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')->required()->maxLength(255)->label('Name'),
-                Forms\Components\TextInput::make('stock')->required()->maxLength(255)->label('Stock')->numeric(),
-                Forms\Components\TextInput::make('price')->required()->label('Price')->numeric()->prefix('Rp'),
-                Forms\Components\Select::make('type')->options([
+                TextInput::make('name')->required()->maxLength(255)->label('Name'),
+                TextInput::make('stock')->required()->maxLength(255)->label('Stock')->numeric(),
+                TextInput::make('price')->required()->label('Price')->numeric()->prefix('Rp'),
+                FileUpload::make('image')->disk('public')->directory('product')->visibility('public')->getUploadedFileNameForStorageUsing(
+                    fn (TemporaryUploadedFile $file, callable $get) => 
+                    (str_replace(' ', '', $get('name') ?? 'default_name')) . '.' . $file->getClientOriginalExtension()
+                ),
+                Select::make('type')->options([
                     'food' => 'Food',
                     'drink' => 'Drink',
                 ])->required(),
@@ -44,6 +52,7 @@ class ProductResource extends Resource
                 Tables\Columns\TextColumn::make('name')->label('Product')->searchable()->sortable(),
                 Tables\Columns\TextColumn::make('stock')->label('Stock')->searchable(),
                 Tables\Columns\TextColumn::make('type')->label('Type')->searchable(),
+                Tables\Columns\ImageColumn::make('image')->label('Image')->searchable(),
                 Tables\Columns\TextColumn::make('price')->label('Price')->searchable()->prefix('Rp.')->formatStateUsing(
                     fn (string $state) : string =>
                     number_format($state, 2, ',', '.')
