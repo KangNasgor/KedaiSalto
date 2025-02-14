@@ -14,7 +14,6 @@ Route::get('/', [HomepageController::class, 'index'])->name('homepage');
 Route::get('/user/account', [AccountDetailsController::class, 'accountView']);
 Route::get('/user/register', [RegisterController::class, 'index'])->name('register');
 Route::post('/user/register/store', [RegisterController::class, 'register']);
-Route::get('/user/product', [ProductController::class, 'productView']);
 Route::get('/user/logout', function(){
     Auth::guard('user')->logout();
     return redirect()->route('login');
@@ -22,6 +21,9 @@ Route::get('/user/logout', function(){
 Route::controller(LoginController::class)->group(function(){
     Route::get('/user/login',  'index')->name('login');
     Route::post('/user/login/store', 'login');
+});
+Route::controller(ProductController::class)->group(function(){
+    Route::get('/user/product',  'productView');
 });
 
 // Back End
