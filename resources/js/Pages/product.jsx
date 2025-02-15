@@ -9,7 +9,7 @@ export default function Product() {
     const [productType, setProductType] = useState('food');
 
     return (
-        <div className="h-fit md:h-screen bg-[#FFB42D]">
+        <div className="h-fit bg-[#FFB42D] pb-24">
             <Head title="Kedai Salto" />
             <Sidebar />
             <Navbar />
@@ -26,14 +26,12 @@ export default function Product() {
                         </div>
                     </div>
                 </div>
-                <div>
-                    {
-                        productType === 'food' ?
+                {
+                    productType === 'food' ?
                         <Makanan />
                         :
                         <Minuman />
-                    }
-                </div>
+                }
             </div>
         </div>
     );
