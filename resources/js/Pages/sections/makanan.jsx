@@ -58,7 +58,7 @@ export default function Makanan() {
                                     <div key={product.id} className="bg-[#FF2E2E] rounded-b-md">
                                         <img src={'/storage/' + product.image} className="w-full object-cover h-40" />
                                         <div className="p-3">
-                                            <h1 className="font-jua text-white">Nama : {product.name}</h1>
+                                            <h1 className="font-jua text-white">{product.name}</h1>
                                             <h1 className="font-jua text-white">Rp{product.price}</h1>
                                             <button onClick={() => openModal(product)} className='bg-[#FFB42D] hover:bg-[#FFB42D] sm:hover:bg-[#FBD288] rounded-xl w-fit px-4 py-3 text-white block mt-5 hover:text-[#FF2E2E] hover:scale-110 active:scale-105 font-jua transition-all duration-200 ease-in-out'>
                                                 BUY NOW
@@ -69,10 +69,14 @@ export default function Makanan() {
                                                 <div className="bg-black/75 h-screen w-full fixed flex items-center justify-center inset-0 modal">
                                                     <div className="bg-[#FF2E2E] rounded-md p-5">
                                                         <img src={'/storage/' + selectedProduct.image} className="w-full object-cover h-40" />
-                                                        <h1 className="font-jua text-white text-xl">{selectedProduct.name}</h1>
-                                                        <h1 className="font-jua text-white text-md">Stock : {selectedProduct.stock}</h1>
-                                                        <h1 className="font-jua text-white text-md">Harga : {selectedProduct.price}</h1>
-                                                        <button onClick={closeModal}>Tutup</button>
+                                                        <div className="mb-3">
+                                                            <h1 className="font-jua text-white text-xl">{selectedProduct.name}</h1>
+                                                            <h1 className="font-jua text-white text-md">Stock : {selectedProduct.stock}</h1>
+                                                            <h1 className="font-jua text-white text-md">Harga : Rp{selectedProduct.price}</h1>
+                                                        </div>
+                                                        <button onClick={closeModal} className="bg-[#FFB42D] px-4 py-2 rounded-md font-jua text-[#FF2E2E] transform transition-all duration-200 hover:scale-110">
+                                                            Tutup
+                                                        </button>
                                                     </div>
                                                 </div>
                                             )
@@ -99,10 +103,14 @@ export default function Makanan() {
                                                     <div className="bg-black/75 h-screen w-full fixed flex items-center justify-center inset-0 modal">
                                                         <div className="bg-[#FF2E2E] rounded-md p-5">
                                                             <img src={'/storage/' + selectedProduct.image} className="w-full object-cover h-40" />
-                                                            <h1 className="font-jua text-white text-xl">{selectedProduct.name}</h1>
-                                                            <h1 className="font-jua text-white text-md">Stock : {selectedProduct.stock}</h1>
-                                                            <h1 className="font-jua text-white text-md">Harga : {selectedProduct.price}</h1>
-                                                            <button onClick={closeModal}>Tutup</button>
+                                                            <div className="mb-3">
+                                                                <h1 className="font-jua text-white text-xl">{selectedProduct.name}</h1>
+                                                                <h1 className="font-jua text-white text-md">Stock : {selectedProduct.stock}</h1>
+                                                                <h1 className="font-jua text-white text-md">Harga : Rp{selectedProduct.price}</h1>
+                                                            </div>
+                                                            <button onClick={closeModal} className="bg-[#FFB42D] px-4 py-2 rounded-md font-jua text-[#FF2E2E] transform transition-all duration-200 hover:scale-110">
+                                                                Tutup
+                                                            </button>
                                                         </div>
                                                     </div>
                                                 )

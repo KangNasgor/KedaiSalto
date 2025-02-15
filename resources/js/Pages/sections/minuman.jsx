@@ -67,10 +67,14 @@ export default function Minuman() {
                                                 <div className="bg-black/75 h-screen w-full fixed flex items-center justify-center inset-0 modal">
                                                     <div className="bg-[#FF2E2E] rounded-md p-5">
                                                         <img src={'/storage/' + selectedProduct.image} className="w-full object-cover h-40" />
-                                                        <h1 className="font-jua text-white text-xl">{selectedProduct.name}</h1>
-                                                        <h1 className="font-jua text-white text-md">Stock : {selectedProduct.stock}</h1>
-                                                        <h1 className="font-jua text-white text-md">Harga : {selectedProduct.price}</h1>
-                                                        <button onClick={closeModal}>Tutup</button>
+                                                        <div className="mb-3">
+                                                                <h1 className="font-jua text-white text-xl">{selectedProduct.name}</h1>
+                                                                <h1 className="font-jua text-white text-md">Stock : {selectedProduct.stock}</h1>
+                                                                <h1 className="font-jua text-white text-md">Harga : Rp{selectedProduct.price}</h1>
+                                                            </div>
+                                                        <button onClick={closeModal} className="bg-[#FFB42D] px-4 py-2 rounded-md font-jua text-[#FF2E2E] transform transition-all duration-200 hover:scale-110">
+                                                            Tutup
+                                                        </button>
                                                     </div>
                                                 </div>
                                             )
@@ -97,10 +101,14 @@ export default function Minuman() {
                                                     <div className="bg-black/75 h-screen w-full fixed flex items-center justify-center inset-0 modal">
                                                         <div className="bg-[#FF2E2E] rounded-md p-5">
                                                             <img src={'/storage/' + selectedProduct.image} className="w-full object-cover h-40" />
-                                                            <h1 className="font-jua text-white text-xl">{selectedProduct.name}</h1>
-                                                            <h1 className="font-jua text-white text-md">Stock : {selectedProduct.stock}</h1>
-                                                            <h1 className="font-jua text-white text-md">Harga : {selectedProduct.price}</h1>
-                                                            <button onClick={closeModal}>Tutup</button>
+                                                            <div className="mb-3">
+                                                                <h1 className="font-jua text-white text-xl">{selectedProduct.name}</h1>
+                                                                <h1 className="font-jua text-white text-md">Stock : {selectedProduct.stock}</h1>
+                                                                <h1 className="font-jua text-white text-md">Harga : Rp{selectedProduct.price}</h1>
+                                                            </div>
+                                                            <button onClick={closeModal} className="bg-[#FFB42D] px-4 py-2 rounded-md font-jua text-[#FF2E2E] transform transition-all duration-200 hover:scale-110">
+                                                                Tutup
+                                                            </button>
                                                         </div>
                                                     </div>
                                                 )

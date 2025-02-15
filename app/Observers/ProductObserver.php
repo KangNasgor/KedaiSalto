@@ -16,7 +16,10 @@ class ProductObserver
     }
     public function saved(Product $product): void{
         if($product->isDirty('image')){
-            Storage::disk('public')->delete($product->getOriginal('image'));
+            $oldImage = $product->getOriginal('image'); 
+            if($oldImage !== null){
+                Storage::disk('public')->delete($product->getOriginal('image'));
+            }
         }
     }
     /**
@@ -32,7 +35,7 @@ class ProductObserver
      */
     public function deleted(Product $product): void
     {
-        if(! is_null($product->image)){
+        if($product->image !== null && Storage::disk('public')->exists($product->image)){
             Storage::disk('public')->delete($product->image);
         }
     }
