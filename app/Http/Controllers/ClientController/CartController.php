@@ -8,12 +8,15 @@ use App\Models\Cart_item;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {
     public function index()
     {
-        return Inertia::render('cart');
+        $cart = Cart::where('user_id', Auth::guard('user')->user()->getAuthIdentifier())->first();
+        $cartItems = Cart_item::with('product')->where('cart_id', $cart->id)->get();
+        return Inertia::render('cart', compact('cartItems'));
     }
     public function storeCart(Request $req){
         $data = $req->validate([
