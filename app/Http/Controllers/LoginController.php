@@ -7,6 +7,7 @@ use Inertia\Inertia;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Session\DatabaseSessionHandler;
 
 class LoginController extends Controller
 {
@@ -22,6 +23,7 @@ class LoginController extends Controller
         else{
             if(Auth::guard('user')->attempt(['email' => $req->input('email'), 'password' => $req->input('password')])){
                 if($statusCode === 200){
+                    session(['user_id' => auth()->id()]);
                     return redirect()->route('homepage');
                 }
                 else{

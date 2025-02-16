@@ -2,15 +2,25 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\ClientController\CartController;
 use App\Http\Controllers\ClientController\ProductController;
 
 Route::middleware(['web'])->get('/user/login/check', function(Request $req){
     if(Auth::guard('user')->check()){
-        return response()->json(['loggedIn' => Auth::guard('user')->check()]);
+        return response()->json([
+            'loggedIn' => true,
+            'user' => Auth::guard('user')->user(),
+        ]);
     }
     else{
-        return response()->json(['loggedIn' => false]);
+        return response()->json([
+            'loggedIn' => false,
+        ]);
     }
 });
 
 Route::get('/user/product/search/{query}',  [ProductController::class, 'searchProduct']);
+
+Route::post('/user/cart/store', [CartController::class, 'storeCart']);
+Route::post('/user/order', [CartController::class, 'order']);

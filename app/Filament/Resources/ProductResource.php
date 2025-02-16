@@ -15,8 +15,10 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\TextInput;
+
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 use Filament\Forms\Components\Select;
+use Filament\Tables\Columns\BadgeColumn;
 
 class ProductResource extends Resource
 {
@@ -51,8 +53,11 @@ class ProductResource extends Resource
                 Tables\Columns\TextColumn::make('id')->label('ID')->sortable(),
                 Tables\Columns\TextColumn::make('name')->label('Product')->searchable()->sortable(),
                 Tables\Columns\TextColumn::make('stock')->label('Stock')->searchable(),
-                Tables\Columns\TextColumn::make('type')->label('Type')->searchable(),
-                Tables\Columns\ImageColumn::make('image')->label('Image')->searchable(),
+                Tables\Columns\BadgeColumn::make('type')->label('Type')->searchable()->colors([
+                    'primary' => 'Food',
+                    'danger' => 'Drink',
+                ]),
+                Tables\Columns\ImageColumn::make('image')->label('Image')->square(),
                 Tables\Columns\TextColumn::make('price')->label('Price')->searchable()->prefix('Rp.')->formatStateUsing(
                     fn (string $state) : string =>
                     number_format($state, 2, ',', '.')
@@ -66,8 +71,11 @@ class ProductResource extends Resource
                 Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
+                Tables\Actions\ActionGroup::make([
+                    Tables\Actions\EditAction::make(),
+                    Tables\Actions\ViewAction::make(),
+                ]),
                 Tables\Actions\ForceDeleteAction::make(),
                 Tables\Actions\RestoreAction::make(),
             ])

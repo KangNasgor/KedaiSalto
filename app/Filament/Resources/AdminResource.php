@@ -37,6 +37,7 @@ class AdminResource extends Resource
     {
         return $table
             ->columns([
+                TextColumn::make('id')->label('ID')->sortable(),
                 TextColumn::make('name')->label('Name'),
             ])
             ->filters([

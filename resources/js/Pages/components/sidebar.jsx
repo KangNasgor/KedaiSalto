@@ -62,7 +62,7 @@ export default function Sidebar() {
                         <p className="w-fit text-white font-semibold font-jua tracking-wide text-md">Home</p>
                     </div>  
                 </Link>
-                <Link href="/user/keranjang">
+                <Link href="/user/cart">
                     <div className={`text-black py-5 pl-5 w-11/12 mx-auto rounded-md items-center flex gap-4 transform transition-all duration-200 hover:bg-white/20 ${url === "/user/keranjang" ? "bg-white/20" : "bg-none"}`}>
                         <FontAwesomeIcon icon={faBasketShopping} className="text-md text-white"/>
                         <p className="w-fit text-white font-semibold font-jua tracking-wide text-md">Keranjang</p>
