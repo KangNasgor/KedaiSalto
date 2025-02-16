@@ -52,6 +52,42 @@ export default function Minuman() {
             setSearchProduct([]);
         }
     }
+    const handleBuyProduct = async () => {
+        try {
+            const response = await axios.get('/api/user/login/check', {
+                headers: { 'Accept': 'application/json' },
+                withCredentials: true,
+            });
+            if (response.data.loggedIn === true) {
+                if (productCount > 0) {
+                    try {
+                        const cartData = {
+                            user_id: response.data.user.id,
+                            product_id: selectedProduct.id,
+                            quantity: productCount,
+                        };
+                        const res = await axios.post(`/api/user/cart/store`, cartData, {
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Accept': 'application/json'
+                            }
+                        });
+                        console.log(res)
+                        alert('Berhasil menambahkan produk kedalam keranjang.')
+                    }
+                    catch (error) {
+                        alert('Something went wrong, Try again.');
+                    }
+                }
+            }
+            else {
+                alert('Anda harus login dahulu.');
+            }
+        }
+        catch (error) {
+            alert(error);
+        }
+    }
     return (
         <div className="w-full md:w-9/12">
             <div className="flex items-center gap-2 mb-5">
@@ -97,7 +133,7 @@ export default function Minuman() {
                                                                 <button onClick={onIncreaseProductCount} className="bg-[#FFB42D] px-3 rounded-e-md active:scale-95">+</button>
                                                             </div>
                                                             <div className="flex gap-3">
-                                                                <button onClick={() => { }} className={`${productCount > 0 ? 'block' : 'hidden'} bg-[#FBD288] px-4 py-2 rounded-md font-jua text-[#FF2E2E] transform transition-all duration-200 hover:scale-110`}>
+                                                                <button onClick={handleBuyProduct} className={`${productCount > 0 ? 'block' : 'hidden'} bg-[#FBD288] px-4 py-2 rounded-md font-jua text-[#FF2E2E] transform transition-all duration-200 hover:scale-110`}>
                                                                     Beli
                                                                 </button>
                                                                 <button onClick={closeModal} className="bg-[#FFB42D] px-4 py-2 rounded-md font-jua text-[#FF2E2E] transform transition-all duration-200 hover:scale-110">
@@ -143,7 +179,7 @@ export default function Minuman() {
                                                                     <button onClick={onIncreaseProductCount} className="bg-[#FFB42D] rounded-e-md px-3 active:scale-95">+</button>
                                                                 </div>
                                                                 <div className="flex gap-3">
-                                                                    <button onClick={() => { }} className={`${productCount > 0 ? 'block' : 'hidden'} bg-[#FBD288] px-4 py-2 rounded-md font-jua text-[#FF2E2E] transform transition-all duration-200 hover:scale-110`}>
+                                                                    <button onClick={handleBuyProduct} className={`${productCount > 0 ? 'block' : 'hidden'} bg-[#FBD288] px-4 py-2 rounded-md font-jua text-[#FF2E2E] transform transition-all duration-200 hover:scale-110`}>
                                                                         Beli
                                                                     </button>
                                                                     <button onClick={closeModal} className="bg-[#FFB42D] px-4 py-2 rounded-md font-jua text-[#FF2E2E] transform transition-all duration-200 hover:scale-110">
