@@ -41,4 +41,23 @@ class CartController extends Controller
             'data' => $data
         ], 200);
     }
-}
+
+    public function updateQuantity(Request $req){
+        $data = $req->validate([
+            'quantities' => 'required|array'
+        ]);
+        
+        foreach($data['quantities'] as $item_id => $quantity){
+            $item = Cart_item::find($item_id);
+            if($item){
+                $item->update([
+                    'quantity' => $quantity,
+                ]);
+            }
+        }
+
+        return response()->json([
+            'message' => 'Data received'
+        ]);
+    }
+}data: 

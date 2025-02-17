@@ -23,3 +23,4 @@ Route::get('/user/product/search/{query}',  [ProductController::class, 'searchPr
 
 Route::post('/user/cart/store', [CartController::class, 'storeCart']);
 Route::post('/user/order', [CartController::class, 'order']);
+Route::put('/user/cart/update', [CartController::class, 'updateQuantity']);
