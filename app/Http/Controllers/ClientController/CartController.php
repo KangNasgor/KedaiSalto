@@ -14,9 +14,17 @@ class CartController extends Controller
 {
     public function index()
     {
-        $cart = Cart::where('user_id', Auth::guard('user')->user()->getAuthIdentifier())->first();
-        $cartItems = Cart_item::with('product')->where('cart_id', $cart->id)->get();
-        return Inertia::render('cart', compact('cartItems'));
+        if(Auth::guard('user')->check()){
+            $cart = Cart::where('user_id', Auth::guard('user')->user()->getAuthIdentifier())->first();
+            if($cart){
+                $cartItems = Cart_item::with('product')->where('cart_id', $cart->id)->get();
+    
+                return Inertia::render('cart', compact('cartItems'));
+            }
+        }
+        else{
+            return Inertia::render('cart');
+        }
     }
     public function storeCart(Request $req){
         $data = $req->validate([

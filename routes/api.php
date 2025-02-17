@@ -9,7 +9,6 @@ Route::middleware(['web'])->get('/user/login/check', function(){
     if(Auth::guard('user')->check()){
         return response()->json([
             'loggedIn' => true,
-            'user' => Auth::guard('user')->user(),
         ]);
     }
     else{

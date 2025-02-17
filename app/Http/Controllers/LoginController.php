@@ -23,7 +23,6 @@ class LoginController extends Controller
         else{
             if(Auth::guard('user')->attempt(['email' => $req->input('email'), 'password' => $req->input('password')])){
                 if($statusCode === 200){
-                    session(['user_id' => auth()->id()]);
                     return redirect()->route('homepage');
                 }
                 else{

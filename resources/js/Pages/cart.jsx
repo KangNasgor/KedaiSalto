@@ -7,7 +7,32 @@ import Sidebar from "./components/Sidebar";
 export default function Cart() {
     const [user, setUser] = useState(false);
     const [productQuantities, setProductQuantities] = useState({});
+    const [priceTotal, setPriceTotal] = useState(0);
     const { cartItems } = usePage().props;
+
+
+    useEffect(() => {
+        const isLoggedIn = async () => {
+            try{
+                const response = await axios.get('/api/user/login/check', {
+                    headers: {
+                        'Accept' : 'application/json',
+                    }
+                })
+                if(response.data.loggedIn){
+                    setUser(response.data.loggedIn);
+                }
+                else{
+                    setUser(null);
+                }
+            }
+            catch(error){
+                console.log(error);
+            }
+        }
+
+        isLoggedIn();
+    }, []);
 
     useEffect(() => {
         if (cartItems) {
@@ -15,33 +40,11 @@ export default function Cart() {
             cartItems.forEach(item => {
                 initialQuantities[item.id] = item.quantity;
             });
+            let price = cartItems.reduce((acc, item) => acc + item.product.price * item.quantity, 0);
+            setPriceTotal(price);
             setProductQuantities(initialQuantities);
         }
     }, [cartItems]);
-
-    useEffect(() => {
-        fetch(`${window.location.origin}/api/user/login/check`, {
-            credentials: 'same-origin',
-            headers: {
-                'Accept': 'application/json'
-            }
-        })
-            .then(response => {
-                if (response.status === 404) {
-                    return { 'loggedIn': false };
-                }
-                else {
-                    return response.json();
-                }
-            })
-            .then(data => {
-                data ?
-                    setUser(data.loggedIn) : setUser(null);
-            })
-            .catch(error => {
-                console.error('Error fetching data : ' + error)
-            })
-    }, []);
 
     const updateProductQuantity = (item_id, newQuantity) => {
         if (newQuantity < 0) return;
@@ -53,7 +56,7 @@ export default function Cart() {
             }));
         }
         catch (error) {
-            alert(error);
+            alert('Gagal mengubah produk, coba lagi nanti.');
         }
     }
 
@@ -62,14 +65,13 @@ export default function Cart() {
             const response = await axios.put('/api/user/cart/update', {
                 quantities: productQuantities
             });
-            console.log(response);
+            alert('Berhasil mengubah produk');
+            window.location.reload();
         }
         catch (error) {
-            alert(error)
+            alert('Gagal mengubah produk!')
         }
     }
-
-    console.log(productQuantities);
     return (
         <div className="bg-[#FFB42D] h-screen">
             <Head title="Kedai Salto" />
@@ -88,7 +90,7 @@ export default function Cart() {
                                         cartItems.map((item) => (
                                             <div key={item.id} className="flex gap-5 font-jua text-white bg-[#FF2E2E] rounded-e-md">
                                                 <div className="w-7/12">
-                                                    <img src={'/storage/' + item.product.image} className="w-full object-cover h-48" />
+                                                    <img src={'/storage/' + item.product.image} className="w-full object-cover h-48" loading="lazy"/>
                                                 </div>
                                                 <div className="w-5/12 py-5">
                                                     <h1 className="text-xl">{item.product.name}</h1>
@@ -104,7 +106,10 @@ export default function Cart() {
                                         ))
                                     }
                                 </div>
-                                <button className="bg-[#FF2E2E] px-3 py-2 font-jua text-white rounded-md mt-10" onClick={saveProduct}>Simpan</button>
+                                <div className="bg-[#FF2E2E] px-3 py-2 font-jua text-white rounded w-fit mt-10">
+                                    <h1>Total harga : Rp{priceTotal}</h1>
+                                </div>
+                                <button className="bg-[#FF2E2E] px-3 py-2 font-jua text-white rounded-md mt-5" onClick={saveProduct}>Simpan</button>
                             </div>
                             :
                             user === true && cartItems.length === 0 ?
