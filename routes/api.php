@@ -9,6 +9,7 @@ Route::middleware(['web'])->get('/user/login/check', function(){
     if(Auth::guard('user')->check()){
         return response()->json([
             'loggedIn' => true,
+            'user' => Auth::guard('user')->user(),
         ]);
     }
     else{
@@ -23,3 +24,4 @@ Route::get('/user/product/search/{query}',  [ProductController::class, 'searchPr
 Route::post('/user/cart/store', [CartController::class, 'storeCart']);
 Route::post('/user/order', [CartController::class, 'order']);
 Route::put('/user/cart/update', [CartController::class, 'updateQuantity']);
+Route::post('/user/cart/checkout', [CartController::class, 'checkout']);

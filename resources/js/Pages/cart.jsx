@@ -3,30 +3,35 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
 import Sidebar from "./components/Sidebar";
+import { faFloppyDisk, faMoneyBill } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Swal from "sweetalert2";
 
 export default function Cart() {
-    const [user, setUser] = useState(false);
+    const [user, setUser] = useState({});
+    const [loggedIn, setLoggedIn] = useState(false);
     const [productQuantities, setProductQuantities] = useState({});
     const [priceTotal, setPriceTotal] = useState(0);
     const { cartItems } = usePage().props;
-
+    
 
     useEffect(() => {
         const isLoggedIn = async () => {
-            try{
+            try {
                 const response = await axios.get('/api/user/login/check', {
                     headers: {
-                        'Accept' : 'application/json',
+                        'Accept': 'application/json',
                     }
                 })
-                if(response.data.loggedIn){
-                    setUser(response.data.loggedIn);
+                if (response.data.loggedIn) {
+                    setLoggedIn(response.data.loggedIn);
+                    setUser(response.data.user);
                 }
-                else{
-                    setUser(null);
+                else {
+                    setLoggedIn(null);
                 }
             }
-            catch(error){
+            catch (error) {
                 console.log(error);
             }
         }
@@ -48,7 +53,6 @@ export default function Cart() {
 
     const updateProductQuantity = (item_id, newQuantity) => {
         if (newQuantity < 0) return;
-
         try {
             setProductQuantities(prev => ({
                 ...prev,
@@ -65,12 +69,32 @@ export default function Cart() {
             const response = await axios.put('/api/user/cart/update', {
                 quantities: productQuantities
             });
-            alert('Berhasil mengubah produk');
-            window.location.reload();
+            Swal.fire({
+                title: 'Berhasil!',
+                text: 'Berhasil mengubah produk',
+                icon: 'success',
+                showConfirmButton: false,
+                toast: true,
+                position: "top-end",
+                timer: 2000,
+                timerProgressBar: true,
+            });
+            setTimeout(() => {
+                window.location.reload()
+            }, 2000);
         }
         catch (error) {
-            alert('Gagal mengubah produk!')
+            Swal.fire({
+                title: 'Error!',
+                text: 'Coba lagi nanti.',
+                icon: 'error',
+                confirmButtonText: 'OK',
+                confirmButtonColor: '#FF2E2E',
+            })
         }
+    }
+    const checkout = async () => {
+
     }
     return (
         <div className="bg-[#FFB42D] h-screen">
@@ -83,21 +107,21 @@ export default function Cart() {
             {
                 <div className="mt-32">
                     {
-                        user === true && cartItems.length > 0 ?
+                        loggedIn === true && cartItems.length > 0 ?
                             <div className="px-5">
                                 <div className="grid grid-cols-3 gap-5">
                                     {
                                         cartItems.map((item) => (
                                             <div key={item.id} className="flex gap-5 font-jua text-white bg-[#FF2E2E] rounded-e-md">
                                                 <div className="w-7/12">
-                                                    <img src={'/storage/' + item.product.image} className="w-full object-cover h-48" loading="lazy"/>
+                                                    <img src={'/storage/' + item.product.image} className="w-full object-cover h-48" loading="lazy" />
                                                 </div>
                                                 <div className="w-5/12 py-5">
                                                     <h1 className="text-xl">{item.product.name}</h1>
                                                     <h1>Jumlah : {item.quantity}</h1>
                                                     <h1>Total harga : Rp{item.product.price * item.quantity}</h1>
                                                     <div className="flex font-jua text-white rounded-md  text-xl mt-3">
-                                                        <button onClick={() => updateProductQuantity(item.id, productQuantities[item.id] - 1)} disabled={item.quantity <= 1} className="bg-[#FFB42D] px-3 rounded-s-md active:scale-95">-</button>
+                                                        <button onClick={() => updateProductQuantity(item.id, productQuantities[item.id] - 1)} disabled={item.quantity === 0} className="bg-[#FFB42D] px-3 rounded-s-md active:scale-95">-</button>
                                                         <input disabled={true} value={productQuantities[item.id]} onChange={(e) => updateProductQuantity(item.id, e.target.value)} className="w-4/12 pl-4 bg-white text-black" />
                                                         <button onClick={() => updateProductQuantity(item.id, productQuantities[item.id] + 1)} disabled={item.quantity >= item.product.stock} className="bg-[#FFB42D] px-3 rounded-e-md active:scale-95">+</button>
                                                     </div>
@@ -109,10 +133,19 @@ export default function Cart() {
                                 <div className="bg-[#FF2E2E] px-3 py-2 font-jua text-white rounded w-fit mt-10">
                                     <h1>Total harga : Rp{priceTotal}</h1>
                                 </div>
-                                <button className="bg-[#FF2E2E] px-3 py-2 font-jua text-white rounded-md mt-5" onClick={saveProduct}>Simpan</button>
+                                <div className="flex gap-3">
+                                    <button className="bg-[#FF2E2E] px-3 py-2 font-jua text-white rounded-md mt-5" onClick={saveProduct}>
+                                        <FontAwesomeIcon icon={faFloppyDisk} className="mr-3"/>
+                                        Simpan
+                                    </button>
+                                    <button className="bg-[#FF2E2E] px-3 py-2 font-jua text-white rounded-md mt-5" onClick={() => { }}>
+                                        <FontAwesomeIcon icon={faMoneyBill} className="mr-3"/>
+                                        Checkout
+                                    </button>
+                                </div>
                             </div>
                             :
-                            user === true && cartItems.length === 0 ?
+                            loggedIn === true && cartItems.length === 0 ?
                                 <div>
                                     <h1 className="font-jua text-white">Keranjang kosong! Silahkan tambah produk yang anda inginkan kedalam keranjang.</h1>
                                 </div>

@@ -37,13 +37,17 @@ class CartController extends Controller
             'updated_at' => now(),
         ]);
 
-        $cartItem = Cart_item::create([
-            'cart_id' => $cart->id,
-            'product_id' => $data['product_id'],
-            'quantity' => $data['quantity'],
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
+        $cartItem = Cart_item::updateOrCreate(
+            [
+                'product_id' => $data['product_id'],
+                'cart_id' => $cart->id,
+            ],
+            [
+                'quantity' => DB::raw('quantity +' . $data['quantity']),
+                'updated_at' => now(),
+            ]
+        );
+        $cartItem->save();
 
         return response()->json([
             'data' => $data
@@ -58,14 +62,21 @@ class CartController extends Controller
         foreach($data['quantities'] as $item_id => $quantity){
             $item = Cart_item::find($item_id);
             if($item){
-                $item->update([
-                    'quantity' => $quantity,
-                ]);
+                if($quantity > 0){
+                    $item->update([
+                        'quantity' => $quantity,
+                    ]);
+                }
+                else{
+                    $item->delete();
+                }
             }
         }
 
-        return response()->json([
-            'message' => 'Data received'
-        ]);
+        return response()->json(['message' => 'Data received']);
     }
-}data: 
+
+    public function checkout(Request $req){
+
+    }
+}

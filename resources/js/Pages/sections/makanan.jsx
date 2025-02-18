@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { usePage, Link } from "@inertiajs/inertia-react";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Swal from "sweetalert2";
 import axios from "axios";
 
 export default function Makanan() {
@@ -41,8 +42,8 @@ export default function Makanan() {
         try {
             const response = await axios.get('/api/user/login/check', {
                 headers: { 'Accept': 'application/json' },
-                withCredentials: true,
             });
+
             if (response.data.loggedIn === true) {
                 if (productCount > 0) {
                     try {
@@ -51,17 +52,23 @@ export default function Makanan() {
                             product_id : selectedProduct.id,
                             quantity : productCount,
                         };
+                        console.log(cartData);
                         const res = await axios.post(`/api/user/cart/store`, cartData, {
                             headers: {
                                 'Content-Type': 'application/json',
                                 'Accept' : 'application/json'
                             }
                         });
-                        console.log(res)
-                        alert('Berhasil menambahkan produk kedalam keranjang.')
+                        Swal.fire({
+                            title: 'Success!',
+                            text: 'Berhasil menambah produk kedalam keranjang',
+                            confirmButtonText: 'OK',
+                            icon: 'success',
+                        });
                     }
                     catch (error) {
-                        alert('Something went wrong, Try again.');
+                        alert('Something went wrong, Try again.' + error);
+                        console.error(error);
                     }
                 }
             }
