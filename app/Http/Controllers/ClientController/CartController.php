@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\ClientController;
 
 use App\Models\Cart;
+use App\Models\Order;
 use Inertia\Inertia;
 use App\Models\Cart_item;
+use App\Models\Order_item;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -77,6 +79,29 @@ class CartController extends Controller
     }
 
     public function checkout(Request $req){
+        $data = $req->validate([
+            'products' => 'required|array',
+            'user_id' => 'required|integer',
+            'price' => 'required|integer'
+        ]);
 
+        $order = Order::create([
+            'user_id' => $data['user_id'],
+            'price' => $data['price'],
+            'created_at' => now(),
+        ]);
+
+        foreach($data['products'] as $products){
+            Order_item::create([
+                'order_id' => $order->id,
+                'product_id' => $products['product_id'],
+                'quantity' => $products['quantity'],
+                'created_at' => now(),
+            ]);
+        }
+
+        return response()->json([
+            'message' => $data
+        ], 200);
     }
 }

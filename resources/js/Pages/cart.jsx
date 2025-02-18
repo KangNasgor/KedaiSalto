@@ -13,7 +13,7 @@ export default function Cart() {
     const [productQuantities, setProductQuantities] = useState({});
     const [priceTotal, setPriceTotal] = useState(0);
     const { cartItems } = usePage().props;
-    
+
 
     useEffect(() => {
         const isLoggedIn = async () => {
@@ -94,7 +94,49 @@ export default function Cart() {
         }
     }
     const checkout = async () => {
+        if (cartItems) {
+            try {
+                const orderData = {
+                    user_id: user.id,
+                    products: cartItems.map(item => ({
+                        product_id: item.product.id,
+                        quantity: item.quantity,
+                    })),
+                    price: priceTotal,
+                }
+                const response = await axios.post('/api/user/cart/checkout', orderData, {
+                    headers: {
+                        'Accept': 'application/json',
+                    }
+                });
+                console.log(response.data.message);
 
+                Swal.fire({
+                    title: 'Success!',
+                    icon: 'success',
+                    text : 'Berhasil checkout pesanan!',
+                    confirmButtonText : 'OK',
+                    confirmButtonColor : '#FF2E2E',
+                });
+            }
+            catch (error) {
+                Swal.fire({
+                    title: 'Error!',
+                    icon: 'error',
+                    text : 'Gagal checkout pesanan, coba lagi nanti.',
+                    confirmButtonText : 'OK',
+                    confirmButtonColor : '#FF2E2E',
+                });
+            }
+        }
+        else {
+            Swal.fire({
+                title: 'Keranjang Kosong!',
+                text: 'Silahkan tambahkan produk ke keranjang.',
+                confirmButtonText: 'OK',
+                confirmButtonColor: '#FF2E2E'
+            });
+        }
     }
     return (
         <div className="bg-[#FFB42D] h-screen">
@@ -135,11 +177,11 @@ export default function Cart() {
                                 </div>
                                 <div className="flex gap-3">
                                     <button className="bg-[#FF2E2E] px-3 py-2 font-jua text-white rounded-md mt-5" onClick={saveProduct}>
-                                        <FontAwesomeIcon icon={faFloppyDisk} className="mr-3"/>
+                                        <FontAwesomeIcon icon={faFloppyDisk} className="mr-3" />
                                         Simpan
                                     </button>
-                                    <button className="bg-[#FF2E2E] px-3 py-2 font-jua text-white rounded-md mt-5" onClick={() => { }}>
-                                        <FontAwesomeIcon icon={faMoneyBill} className="mr-3"/>
+                                    <button className="bg-[#FF2E2E] px-3 py-2 font-jua text-white rounded-md mt-5" onClick={checkout}>
+                                        <FontAwesomeIcon icon={faMoneyBill} className="mr-3" />
                                         Checkout
                                     </button>
                                 </div>

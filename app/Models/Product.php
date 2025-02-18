@@ -11,4 +11,7 @@ use Filament\Support\Contracts\HasLabel;
 class Product extends Model
 {
     use SoftDeletes;
+    public function order_item(){
+        return $this->belongsTo(Order_item::class, 'product_id', 'id');
+    }
 }

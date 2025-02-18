@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\OrderResource\Pages;
-use App\Filament\Resources\OrderResource\RelationManagers;
-use App\Models\Order;
+use App\Filament\Resources\OrderItemResource\Pages;
+use App\Filament\Resources\OrderItemResource\RelationManagers;
+use App\Models\Order_item;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,13 +13,11 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class OrderResource extends Resource
+class OrderItemResource extends Resource
 {
-    protected static ?string $model = Order::class;
+    protected static ?string $model = Order_item::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-briefcase';
-    protected static ?string $activeNavigationIcon = 'heroicon-s-briefcase';
-    protected static ?string $navigationGroup = 'Data';
+    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
     {
@@ -34,8 +32,9 @@ class OrderResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('id')->label('ID')->sortable(),
-                Tables\Columns\TextColumn::make('user.name')->label('User')->searchable()->sortable(),
-                Tables\Columns\TextColumn::make('price')->label('Price')->searchable(),
+                Tables\Columns\TextColumn::make('order.user.name')->label('User')->sortable(),
+                Tables\Columns\TextColumn::make('product.name')->label('Product')->sortable(),
+                Tables\Columns\TextColumn::make('quantity')->label('Quantity')->sortable(),
             ])
             ->filters([
                 //
@@ -60,9 +59,9 @@ class OrderResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListOrders::route('/'),
-            'create' => Pages\CreateOrder::route('/create'),
-            'edit' => Pages\EditOrder::route('/{record}/edit'),
+            'index' => Pages\ListOrderItems::route('/'),
+            'create' => Pages\CreateOrderItem::route('/create'),
+            'edit' => Pages\EditOrderItem::route('/{record}/edit'),
         ];
     }
 }

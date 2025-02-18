@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { usePage, Link } from "@inertiajs/inertia-react";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Swal from "sweetalert2";
 import axios from "axios";
 
 export default function Minuman() {
@@ -13,16 +14,16 @@ export default function Minuman() {
     const [productCount, setProductCount] = useState(0);
 
     const openModal = (product) => setSelectedProduct(product);
-    const closeModal = () => setSelectedProduct(null);
+    const closeModal = () => {
+        setSelectedProduct(null);
+        setProductCount(0);
+    }
 
     window.onclick = function (event) {
         if (event.target.classList.contains('modal')) {
             setSelectedProduct(null);
         }
     }
-
-    const onDecreaseProductCount = () => setProductCount(prev => (prev > 0 ? prev - 1 : 0));
-    const onIncreaseProductCount = () => setProductCount(prev => (prev < selectedProduct.stock ? prev + 1 : selectedProduct.stock));
 
     const handleProductCountChange = (e, stock) => {
         const count = e.target.value;
@@ -37,8 +38,55 @@ export default function Minuman() {
         }
     }
 
+    const handleBuyProduct = async () => {
+        try {
+            const response = await axios.get('/api/user/login/check', {
+                headers: { 'Accept': 'application/json' },
+            });
+
+            if (response.data.loggedIn === true) {
+                if (productCount > 0) {
+                    try {
+                        const cartData = {
+                            user_id : response.data.user.id,
+                            product_id : selectedProduct.id,
+                            quantity : productCount,
+                        };
+                        console.log(cartData);
+                        const res = await axios.post(`/api/user/cart/store`, cartData, {
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Accept' : 'application/json'
+                            }
+                        });
+                        Swal.fire({
+                            title: 'Success!',
+                            text: 'Berhasil menambah produk kedalam keranjang',
+                            confirmButtonText: 'OK',
+                            icon: 'success',
+                        });
+                    }
+                    catch (error) {
+                        alert('Something went wrong, Try again.' + error);
+                        console.error(error);
+                    }
+                }
+            }
+            else{
+                alert('Anda harus login dahulu.');
+            }
+        }
+        catch (error) {
+            alert(error);
+        }
+    }
+
+    const onDecreaseProductCount = () => setProductCount(prev => (prev > 0 ? prev - 1 : 0));
+    const onIncreaseProductCount = () => setProductCount(prev => (prev < selectedProduct.stock ? prev + 1 : selectedProduct.stock));
+
     const handleSearch = async (e) => {
         e.preventDefault();
+
         if (query) {
             try {
                 const res = await axios.get(`/api/user/product/search/${query}`);
@@ -50,42 +98,6 @@ export default function Minuman() {
         }
         else {
             setSearchProduct([]);
-        }
-    }
-    const handleBuyProduct = async () => {
-        try {
-            const response = await axios.get('/api/user/login/check', {
-                headers: { 'Accept': 'application/json' },
-                withCredentials: true,
-            });
-            if (response.data.loggedIn === true) {
-                if (productCount > 0) {
-                    try {
-                        const cartData = {
-                            user_id: response.data.user.id,
-                            product_id: selectedProduct.id,
-                            quantity: productCount,
-                        };
-                        const res = await axios.post(`/api/user/cart/store`, cartData, {
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'Accept': 'application/json'
-                            }
-                        });
-                        console.log(res)
-                        alert('Berhasil menambahkan produk kedalam keranjang.')
-                    }
-                    catch (error) {
-                        alert('Something went wrong, Try again.');
-                    }
-                }
-            }
-            else {
-                alert('Anda harus login dahulu.');
-            }
-        }
-        catch (error) {
-            alert(error);
         }
     }
     return (
@@ -129,7 +141,7 @@ export default function Minuman() {
                                                             </div>
                                                             <div className="flex font-jua text-white rounded-md mx-auto mb-4 justify-center text-xl">
                                                                 <button onClick={onDecreaseProductCount} className="bg-[#FFB42D] px-3 rounded-s-md active:scale-95">-</button>
-                                                                <input type="number" value={productCount} onChange={(e) => handleProductCountChange(e, selectedProduct.stock)} className="w-4/12 pl-4 text-black" />
+                                                                <input type="number" value={productCount} onChange={(e) => handleProductCountChange(e, selectedProduct.stock)} className="w-4/12 text-black" />
                                                                 <button onClick={onIncreaseProductCount} className="bg-[#FFB42D] px-3 rounded-e-md active:scale-95">+</button>
                                                             </div>
                                                             <div className="flex gap-3">
@@ -174,9 +186,9 @@ export default function Minuman() {
                                                                     <h1 className="font-jua text-white text-md">Harga : Rp{selectedProduct.price}</h1>
                                                                 </div>
                                                                 <div className="flex font-jua text-white rounded-md mb-4 text-xl">
-                                                                    <button onClick={onDecreaseProductCount} className="bg-[#FFB42D] rounded-s-md px-3 active:scale-95">-</button>
+                                                                    <button onClick={onDecreaseProductCount} className="bg-[#FFB42D] px-3 rounded-s-md active:scale-95">-</button>
                                                                     <input type="number" value={productCount} onChange={(e) => handleProductCountChange(e, selectedProduct.stock)} className="w-4/12 pl-4 text-black" />
-                                                                    <button onClick={onIncreaseProductCount} className="bg-[#FFB42D] rounded-e-md px-3 active:scale-95">+</button>
+                                                                    <button onClick={onIncreaseProductCount} className="bg-[#FFB42D] px-3 rounded-e-md active:scale-95">+</button>
                                                                 </div>
                                                                 <div className="flex gap-3">
                                                                     <button onClick={handleBuyProduct} className={`${productCount > 0 ? 'block' : 'hidden'} bg-[#FBD288] px-4 py-2 rounded-md font-jua text-[#FF2E2E] transform transition-all duration-200 hover:scale-110`}>
