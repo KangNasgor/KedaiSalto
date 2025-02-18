@@ -1,4 +1,4 @@
-import { Head, usePage } from "@inertiajs/inertia-react";
+import { Head, usePage, Link } from "@inertiajs/inertia-react";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
@@ -13,7 +13,7 @@ export default function Cart() {
     const [productQuantities, setProductQuantities] = useState({});
     const [priceTotal, setPriceTotal] = useState(0);
     const { cartItems } = usePage().props;
-
+    const [promoCode, setPromoCode] = useState('');
 
     useEffect(() => {
         const isLoggedIn = async () => {
@@ -102,6 +102,7 @@ export default function Cart() {
                         product_id: item.product.id,
                         quantity: item.quantity,
                     })),
+                    promo_code : promoCode,
                     price: priceTotal,
                 }
                 const response = await axios.post('/api/user/cart/checkout', orderData, {
@@ -114,18 +115,18 @@ export default function Cart() {
                 Swal.fire({
                     title: 'Success!',
                     icon: 'success',
-                    text : 'Berhasil checkout pesanan!',
-                    confirmButtonText : 'OK',
-                    confirmButtonColor : '#FF2E2E',
+                    text: 'Berhasil checkout pesanan!',
+                    confirmButtonText: 'OK',
+                    confirmButtonColor: '#FF2E2E',
                 });
             }
             catch (error) {
                 Swal.fire({
                     title: 'Error!',
                     icon: 'error',
-                    text : 'Gagal checkout pesanan, coba lagi nanti.',
-                    confirmButtonText : 'OK',
-                    confirmButtonColor : '#FF2E2E',
+                    text: 'Gagal checkout pesanan, coba lagi nanti.',
+                    confirmButtonText: 'OK',
+                    confirmButtonColor: '#FF2E2E',
                 });
             }
         }
@@ -138,8 +139,9 @@ export default function Cart() {
             });
         }
     }
+    
     return (
-        <div className="bg-[#FFB42D] h-screen">
+        <div className={`bg-[#FFB42D] ${loggedIn === false || loggedIn === null ||  cartItems === null ? 'h-screen' : 'h-fit pb-10'}`}>
             <Head title="Kedai Salto" />
             <Navbar />
             <Sidebar />
@@ -175,6 +177,10 @@ export default function Cart() {
                                 <div className="bg-[#FF2E2E] px-3 py-2 font-jua text-white rounded w-fit mt-10">
                                     <h1>Total harga : Rp{priceTotal}</h1>
                                 </div>
+                                <div className="bg-[#FF2E2E] px-3 py-2 font-jua rounded w-fit mt-10">
+                                    <h1 className="mb-3 text-white">Punya kode promo?</h1>
+                                    <input placeholder="ABCDE" className="rounded-md px-2 text-black" value={promoCode} onChange={e => setPromoCode(e.target.value)}/>
+                                </div>
                                 <div className="flex gap-3">
                                     <button className="bg-[#FF2E2E] px-3 py-2 font-jua text-white rounded-md mt-5" onClick={saveProduct}>
                                         <FontAwesomeIcon icon={faFloppyDisk} className="mr-3" />
@@ -192,8 +198,11 @@ export default function Cart() {
                                     <h1 className="font-jua text-white">Keranjang kosong! Silahkan tambah produk yang anda inginkan kedalam keranjang.</h1>
                                 </div>
                                 :
-                                <div>
-                                    <h1 className="font-jua text-white">Silahkan login dahulu.</h1>
+                                <div className="w-full flex justify-center items-center">
+                                    <div className="flex flex-col items-center gap-3">
+                                        <h1 className="font-jua text-white text-5xl">Silahkan login dahulu.</h1>
+                                        <Link href="/user/login" className="w-fit px-5 py-3 bg-[#FF2E2E] hover:bg-[#FBD288] hover:scale-105 transform transition-all duration-200 rounded-lg font-jua text-[#FFB42D] hover:text-[#FF2E2E] text-2xl">Login</Link>
+                                    </div>
                                 </div>
                     }
                 </div>

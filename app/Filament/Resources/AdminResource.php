@@ -23,6 +23,7 @@ class AdminResource extends Resource
     protected static ?string $activeNavigationIcon = 'heroicon-s-user-plus';
     
     protected static ?string $navigationGroup = 'Data';
+    protected static ?string $navigationBadgeTooltip = 'Total admin';
 
     public static function form(Form $form): Form
     {

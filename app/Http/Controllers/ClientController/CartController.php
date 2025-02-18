@@ -4,6 +4,7 @@ namespace App\Http\Controllers\ClientController;
 
 use App\Models\Cart;
 use App\Models\Order;
+use App\Models\Promo_code;
 use Inertia\Inertia;
 use App\Models\Cart_item;
 use App\Models\Order_item;
@@ -82,12 +83,21 @@ class CartController extends Controller
         $data = $req->validate([
             'products' => 'required|array',
             'user_id' => 'required|integer',
-            'price' => 'required|integer'
+            'price' => 'required|integer',
+            'promo_code' => 'nullable|string',
         ]);
+        $price = $data['price'];
+        if(!empty($data['promo_code'])){
+            $promo = Promo_code::where('code', $data['promo_code'])->first();
+            if($promo){
+                $discount = $promo->discount / 100;
+                $price -= $price * $discount;
+            }
+        }
 
         $order = Order::create([
             'user_id' => $data['user_id'],
-            'price' => $data['price'],
+            'price' => $price,
             'created_at' => now(),
         ]);
 
