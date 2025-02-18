@@ -21,7 +21,10 @@ class CartController extends Controller
             $cart = Cart::where('user_id', Auth::guard('user')->user()->getAuthIdentifier())->first();
             if($cart){
                 $cartItems = Cart_item::with('product')->where('cart_id', $cart->id)->get();
-    
+                return Inertia::render('cart', compact('cartItems'));
+            }
+            else{
+                $cartItems = [];
                 return Inertia::render('cart', compact('cartItems'));
             }
         }
@@ -86,7 +89,10 @@ class CartController extends Controller
             'price' => 'required|integer',
             'promo_code' => 'nullable|string',
         ]);
+        $cart = Cart::where('user_id', $data['user_id'])->first();
+
         $price = $data['price'];
+
         if(!empty($data['promo_code'])){
             $promo = Promo_code::where('code', $data['promo_code'])->first();
             if($promo){
@@ -101,13 +107,18 @@ class CartController extends Controller
             'created_at' => now(),
         ]);
 
-        foreach($data['products'] as $products){
+        foreach($data['products'] as $product){
             Order_item::create([
                 'order_id' => $order->id,
-                'product_id' => $products['product_id'],
-                'quantity' => $products['quantity'],
+                'product_id' => $product['product_id'],
+                'quantity' => $product['quantity'],
                 'created_at' => now(),
             ]);
+        }
+
+        if($cart){
+            Cart_item::where('cart_id', $cart->id)->delete();
+            $cart->delete();
         }
 
         return response()->json([

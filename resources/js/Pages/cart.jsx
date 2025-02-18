@@ -102,7 +102,7 @@ export default function Cart() {
                         product_id: item.product.id,
                         quantity: item.quantity,
                     })),
-                    promo_code : promoCode,
+                    promo_code: promoCode,
                     price: priceTotal,
                 }
                 const response = await axios.post('/api/user/cart/checkout', orderData, {
@@ -139,9 +139,9 @@ export default function Cart() {
             });
         }
     }
-    
+
     return (
-        <div className={`bg-[#FFB42D] ${loggedIn === false || loggedIn === null ||  cartItems === null ? 'h-screen' : 'h-fit pb-10'}`}>
+        <div className={`bg-[#FFB42D] ${loggedIn === false || loggedIn === null || cartItems.length === 0 ? 'h-screen' : 'h-fit pb-10'}`}>
             <Head title="Kedai Salto" />
             <Navbar />
             <Sidebar />
@@ -179,7 +179,7 @@ export default function Cart() {
                                 </div>
                                 <div className="bg-[#FF2E2E] px-3 py-2 font-jua rounded w-fit mt-10">
                                     <h1 className="mb-3 text-white">Punya kode promo?</h1>
-                                    <input placeholder="ABCDE" className="rounded-md px-2 text-black" value={promoCode} onChange={e => setPromoCode(e.target.value)}/>
+                                    <input placeholder="ABCDE" className="rounded-md px-2 text-black" value={promoCode} onChange={e => setPromoCode(e.target.value)} />
                                 </div>
                                 <div className="flex gap-3">
                                     <button className="bg-[#FF2E2E] px-3 py-2 font-jua text-white rounded-md mt-5" onClick={saveProduct}>
@@ -194,8 +194,10 @@ export default function Cart() {
                             </div>
                             :
                             loggedIn === true && cartItems.length === 0 ?
-                                <div>
-                                    <h1 className="font-jua text-white">Keranjang kosong! Silahkan tambah produk yang anda inginkan kedalam keranjang.</h1>
+                                <div className="w-full flex justify-center items-center">
+                                    <div className="flex flex-col items-center gap-3">
+                                        <h1 className="font-jua text-white text-5xl text-center">Keranjang kosong, silahkan tambahkan produk kedalam keranjang!</h1>
+                                    </div>
                                 </div>
                                 :
                                 <div className="w-full flex justify-center items-center">
