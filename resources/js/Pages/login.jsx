@@ -7,6 +7,8 @@ import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Inertia } from '@inertiajs/inertia'
 import Navbar from './components/Navbar'
+import Swal from 'sweetalert2'
+import axios from 'axios'
 
 export default function Login() {
     const [show, setShow] = useState(false);
@@ -23,11 +25,37 @@ export default function Login() {
             [e.target.name] : e.target.value,
         }));
     }
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        formData._token = document.querySelector('meta[name="csrf-token"]').content;
-        Inertia.post('/user/login/store', formData, {
-        });
+    const handleSubmit = async (e) => {
+        try{
+            e.preventDefault();
+            formData._token = document.querySelector('meta[name="csrf-token"]').content;
+            Inertia.post('/user/login/store', formData, {
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'X-CSRF-TOKEN' : document.querySelector('meta[name="csrf-token"]').content,
+                    'Content-Type' : 'application/json'
+                }
+            });
+            
+            Swal.fire({
+                title: 'Berhasil login!',
+                icon: 'success',
+                showConfirmButton: false,
+                toast: true,
+                position: "top-end",
+                timer: 2000,
+                timerProgressBar: true,
+            });
+        }
+        catch(error){
+            Swal.fire({
+                title: 'Gagal login!',
+                icon: 'error',
+                text: 'Coba lagi nanti',
+                confirmButtonText: 'OK',
+                confirmButtonColor: '#FF2E2E',
+            });
+        }
     }
     return (
         <div className='h-screen bg-[#FFB42D]'>

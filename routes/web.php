@@ -9,6 +9,7 @@ use App\Http\Controllers\ClientController\ProductController;
 use App\Http\Controllers\ClientController\HomepageController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ClientController\CartController;
+use App\Http\Controllers\ClientController\OrderController;
 
 // Front End
 Route::get('/', [HomepageController::class, 'index'])->name('homepage');
@@ -30,3 +31,7 @@ Route::controller(ProductController::class)->group(function(){
 Route::controller(CartController::class)->group(function(){
     Route::get('/user/cart', 'index');
 });
+
+Route::get('/user/order', [OrderController::class, 'index']);
+
+

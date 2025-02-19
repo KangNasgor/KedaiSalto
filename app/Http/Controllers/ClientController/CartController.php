@@ -49,10 +49,11 @@ class CartController extends Controller
                 'cart_id' => $cart->id,
             ],
             [
-                'quantity' => DB::raw('quantity +' . $data['quantity']),
+                'quantity' => 0,
                 'updated_at' => now(),
             ]
         );
+        $cartItem->increment('quantity', $data['quantity']);
         $cartItem->save();
 
         return response()->json([
@@ -112,6 +113,7 @@ class CartController extends Controller
                 'order_id' => $order->id,
                 'product_id' => $product['product_id'],
                 'quantity' => $product['quantity'],
+                'user_id' => $data['user_id'],
                 'created_at' => now(),
             ]);
         }

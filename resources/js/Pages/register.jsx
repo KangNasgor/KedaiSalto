@@ -7,6 +7,7 @@ import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Inertia } from '@inertiajs/inertia'
 import { useState } from 'react'
+import Swal from "sweetalert2";
 
 export default function Register() {
     const [show, setShow] = useState(false);
@@ -27,12 +28,32 @@ export default function Register() {
     }
 
     const handleSubmit = (e) => {
-        e.preventDefault();
-        Inertia.post('/user/register/store', formData, {
-            headers: {
-                "X-CSRF-TOKEN" : document.querySelector('meta[name="csrf-token"]').content,
-            },
-        });
+        try{
+            e.preventDefault();
+            Inertia.post('/user/register/store', formData, {
+                headers: {
+                    "X-CSRF-TOKEN" : document.querySelector('meta[name="csrf-token"]').content,
+                },
+            });
+            Swal.fire({
+                title: 'Berhasil membuat akun!',
+                icon: 'success',
+                showConfirmButton: false,
+                toast: true,
+                position: "top-end",
+                timer: 2000,
+                timerProgressBar: true,
+            });
+        }
+        catch(error){
+            Swal.fire({
+                title: 'Gagal membuat akun!',
+                text: 'Coba lagi nanti.',
+                icon: 'error',
+                confirmButtonText: 'OK',
+                confirmButtonColor: '#FF2E2E',
+            });
+        }
     }
 
     const toggleShowPassword = () => setShow(prev => !prev);

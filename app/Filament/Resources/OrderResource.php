@@ -34,6 +34,14 @@ class OrderResource extends Resource
                     User::all()->pluck('name', 'id')->toArray()
                 ]),
                 TextInput::make('price')->required()->label('Price')->numeric()->prefix('Rp'),
+                Select::make('confirmed')->required()->label('Confirmed')->options([
+                    'True' => 'True',
+                    'False' => 'False',
+                ]),
+                Select::make('paid')->required()->label('Paid')->options([
+                    'True' => 'True',
+                    'False' => 'False',
+                ]),
             ]);
     }
 
@@ -48,8 +56,11 @@ class OrderResource extends Resource
                     'primary' => 'True',
                     'danger' => 'False',
                 ]),
+                Tables\Columns\BadgeColumn::make('paid')->label('Paid')->searchable()->colors([
+                    'primary' => 'True',
+                    'danger' => 'False',
+                ]),
             ])
-            ->recordUrl(null)
             ->filters([
                 //
             ])

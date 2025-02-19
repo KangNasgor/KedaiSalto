@@ -7,14 +7,17 @@ import Minuman from "./sections/minuman";
 
 export default function Product() {
     const [productType, setProductType] = useState('food');
+    const {loggedIn} = usePage().props;
+
+    console.log(loggedIn);
 
     return (
         <div className="h-fit bg-[#FFB42D] pb-24">
             <Head title="Kedai Salto" />
             <Sidebar />
             <Navbar />
-            <div className="pt-10 pl-5">
-                <h1 className="font-jua text-4xl text-white w-fit">OUR PRODUCTS</h1>
+            <div className="pl-5 pt-10">
+                <h1 className="text-4xl font-jua text-white">Produk kami</h1>
             </div>
             <div className="mt-10 lg:mt-32 pr-5 md:pr-0 pl-5 flex flex-col md:flex-row">
                 <div className="w-fit mb-5 md:mb-0 md:w-3/12">
