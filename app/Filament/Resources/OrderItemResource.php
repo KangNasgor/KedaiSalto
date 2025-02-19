@@ -3,18 +3,12 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\OrderItemResource\Pages;
-use App\Filament\Resources\OrderItemResource\RelationManagers;
+use App\Models\Order;
 use App\Models\Order_item;
-use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Select;
-use App\Models\Order;
 
 class OrderItemResource extends Resource
 {
@@ -40,15 +34,20 @@ class OrderItemResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('id')->label('ID')->sortable(),
-                Tables\Columns\TextColumn::make('order.user.name')->label('User')->sortable(),
+                Tables\Columns\TextColumn::make('user.name')->label('User')->sortable(),
                 Tables\Columns\TextColumn::make('product.name')->label('Product')->sortable(),
                 Tables\Columns\TextColumn::make('quantity')->label('Quantity')->sortable(),
             ])
             ->recordUrl(null)
             ->filters([
-                //
+                Tables\Filters\SelectFilter::make('user_id')->label('User')->options(
+                    Order_item::with('user')->select('user_id')->get()->mapWithKeys(fn($order) =>
+                        [$order->user->id => $order->user->name]
+                    )->toArray(),
+                ),
             ])
             ->actions([
+                Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([

@@ -18,7 +18,6 @@ use Filament\Forms\Components\TextInput;
 
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 use Filament\Forms\Components\Select;
-use Filament\Tables\Columns\BadgeColumn;
 
 class ProductResource extends Resource
 {

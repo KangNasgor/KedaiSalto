@@ -44,12 +44,17 @@ class OrderResource extends Resource
                 Tables\Columns\TextColumn::make('id')->label('ID')->sortable(),
                 Tables\Columns\TextColumn::make('user.name')->label('User')->searchable()->sortable(),
                 Tables\Columns\TextColumn::make('price')->label('Price')->searchable(),
+                Tables\Columns\BadgeColumn::make('confirmed')->label('Confirmed')->searchable()->colors([
+                    'primary' => 'True',
+                    'danger' => 'False',
+                ]),
             ])
             ->recordUrl(null)
             ->filters([
                 //
             ])
             ->actions([
+                Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
