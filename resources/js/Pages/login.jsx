@@ -29,25 +29,40 @@ export default function Login() {
         try{
             e.preventDefault();
             formData._token = document.querySelector('meta[name="csrf-token"]').content;
-            Inertia.post('/user/login/store', formData, {
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest',
-                    'X-CSRF-TOKEN' : document.querySelector('meta[name="csrf-token"]').content,
-                    'Content-Type' : 'application/json'
-                }
+            const response = await axios.post('/user/login/store', formData, {
+                headers:{
+                    "X-CSRF-TOKEN" : document.querySelector('meta[name="csrf-token"]').content,
+                    "Accept" : "application/json",
+                    "Content-Type" : "application/json",
+                    "X-Requested-with" : "XMLHttpRequest",
+                },
+                withCredentials: true,
             });
-            
-            Swal.fire({
-                title: 'Berhasil login!',
-                icon: 'success',
-                showConfirmButton: false,
-                toast: true,
-                position: "top-end",
-                timer: 2000,
-                timerProgressBar: true,
-            });
+            if(response.status === 200){
+                Swal.fire({
+                    title: 'Berhasil login!',
+                    icon: 'success',
+                    showConfirmButton: false,
+                    toast: true,
+                    position: "top-end",
+                    timer: 2000,
+                    timerProgressBar: true,
+                });
+
+                window.location.href = '/';
+            }
+            else{
+                Swal.fire({
+                    title: 'Gagal login!',
+                    icon: 'error',
+                    text: 'Coba lagi nanti',
+                    confirmButtonText: 'OK',
+                    confirmButtonColor: '#FF2E2E',
+                });
+            }
         }
         catch(error){
+            console.error(error);
             Swal.fire({
                 title: 'Gagal login!',
                 icon: 'error',

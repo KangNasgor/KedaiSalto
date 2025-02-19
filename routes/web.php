@@ -10,6 +10,7 @@ use App\Http\Controllers\ClientController\HomepageController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ClientController\CartController;
 use App\Http\Controllers\ClientController\OrderController;
+use App\Http\Controllers\ClientController\PaymentProofController;
 
 // Front End
 Route::get('/', [HomepageController::class, 'index'])->name('homepage');
@@ -34,4 +35,5 @@ Route::controller(CartController::class)->group(function(){
 
 Route::get('/user/order', [OrderController::class, 'index']);
 
+Route::post('/user/payment/store', [PaymentProofController::class, 'store']);
 

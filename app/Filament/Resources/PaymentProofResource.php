@@ -35,7 +35,8 @@ class PaymentProofResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('order.user.name')->label('User')->searchable(),
+                Tables\Columns\ImageColumn::make('image')->label('Image'),
             ])
             ->filters([
                 //

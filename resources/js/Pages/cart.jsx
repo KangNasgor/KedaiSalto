@@ -217,7 +217,7 @@ export default function Cart() {
                                 loggedIn === true && cartItems.length === 0 ?
                                     <div className="w-full flex justify-center items-center">
                                         <div className="flex flex-col items-center gap-3">
-                                            <h1 className="font-jua text-white text-5xl text-center">Keranjang kosong, silahkan tambahkan produk kedalam keranjang!</h1>
+                                            <h1 className="font-jua text-white/50 text-5xl text-center">Keranjang kosong, silahkan tambahkan produk kedalam keranjang!</h1>
                                         </div>
                                     </div>
                                     :
