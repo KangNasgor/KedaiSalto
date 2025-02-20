@@ -8,10 +8,14 @@ import axios from "axios";
 export default function Order() {
     const { order } = usePage().props;
     const { orderItem } = usePage().props;
+    const { proof } = usePage().props;
     const [products, setProducts] = useState({});
     const [file, setFile] = useState(null);
     const [modal, setModal] = useState(null);
-    const [loggedIn, setLoggedIn] = useState(false);
+    const [loggedIn, setLoggedIn] = useState(null);
+    const [loadingText, setLoadingText] = useState('Loading');
+
+    const intervalRef = useRef(null);
 
     useEffect(() => {
         const isLoggedIn = async () => {
@@ -35,6 +39,17 @@ export default function Order() {
 
         isLoggedIn();
     }, []);
+
+    useEffect(() => {
+        if (loggedIn === null) {
+            intervalRef.current = setInterval(() => setLoadingText(prev => (prev.length === 10 ? 'Loading' : prev + '.')), 400);
+        }
+        else {
+            clearInterval(intervalRef.current);
+        }
+
+        return () => clearInterval(intervalRef.current);
+    }, [loggedIn]);
 
     useEffect(() => {
         if (orderItem) {
@@ -71,7 +86,6 @@ export default function Order() {
                 confirmButtonText: 'OK',
                 confirmButtonColor: '#FF2E2E'
             });
-
             return;
         }
 
@@ -111,7 +125,6 @@ export default function Order() {
             })
         }
     }
-
     return (
         <div>
             <div className="h-fit min-h-screen pb-10 bg-[#FFB42D]">
@@ -137,14 +150,16 @@ export default function Order() {
                                     }
                                 </div>
                                 <div className="w-6/12">
+                                    <h1 className="font-jua text-white">Tanggal order : {order.created_at.slice(0, 10)}</h1>
                                     <h1 className="font-jua text-white">Total harga : Rp{order.price}</h1>
                                     <h1 className="font-jua text-white">Status : {order.confirmed === "False" ? 'Belum di konfirmasi' : 'Terkonfirmasi'}</h1>
-                                    <button onClick={() => toggleModal(order.id)} className={`px-3 py-2 rounded-md font-jua text-white bg-[#FF2E2E] mt-3 ${order.confirmed === "False" ? 'block' : 'hidden'}`}>Upload bukti pembayaran</button>
+                                    <h1 className={`font-jua text-white ${order.confirmed === "True" ? "block" : 'hidden'}`}>Status pembayaran : {order.paid=== "False" ? 'Belum dibayar' : 'Sudah dibayar'}</h1>
+                                    <button onClick={() => toggleModal(order.id)} className={`px-3 py-2 rounded-md font-jua text-white bg-[#FF2E2E] mt-3 ${order.confirmed === "True" ? 'block' : 'hidden'}`}>{proof ? 'Bukti pembayaran' : 'Upload bukti pembayaran'}</button>
                                     {
                                         modal &&
                                         <div className="bg-black/50 h-full min-h-screen w-full z-30 fixed flex top-0 left-0 modal justify-center items-center">
                                             <div className="bg-[#FF2E2E] p-3 rounded-md text-white font-jua">
-                                                <h1>Silahkan upload bukti pembayaran :</h1>
+                                                <h1 className={`${proof ? 'hidden' : 'block'}`}>Silahkan upload bukti pembayaran :</h1>
                                                 <input type="file" className="file:bg-white file:border-none hover:file:bg-slate-300 file:transform file:transition-all file:duration-200 file:rounded-md" onChange={handleFileChange} />
                                                 <button onClick={() => uploadFile(order.user.name, modal)} className="px-3 py-2 rounded-md font-jua text-[#FF2E2E] bg-[#FFB42D] mt-3">Upload</button>
                                             </div>
@@ -160,13 +175,19 @@ export default function Order() {
                                     </div>
                                 </div>
                                 :
-                                <div className="w-full flex justify-center items-center">
-                                    <div className="flex flex-col items-center gap-3">
-                                        <h1 className="font-jua text-white text-5xl">Silahkan login dahulu.</h1>
-                                        <Link href="/user/login" className="w-fit px-5 py-3 bg-[#FF2E2E] hover:bg-[#FBD288] hover:scale-105 transform transition-all duration-200 rounded-lg font-jua text-[#FFB42D] hover:text-[#FF2E2E] text-2xl">Login</Link>
+                                loggedIn === false ?
+                                    <div className="w-full flex justify-center items-center">
+                                        <div className="flex flex-col items-center gap-3">
+                                            <h1 className="font-jua text-white text-5xl">Silahkan login dahulu.</h1>
+                                            <Link href="/user/login" className="w-fit px-5 py-3 bg-[#FF2E2E] hover:bg-[#FBD288] hover:scale-105 transform transition-all duration-200 rounded-lg font-jua text-[#FFB42D] hover:text-[#FF2E2E] text-2xl">Login</Link>
+                                        </div>
                                     </div>
-                                </div>
-
+                                    :
+                                    <div className="w-full flex justify-center items-center">
+                                        <div className="flex flex-col items-center gap-3">
+                                            <h1 className="font-jua text-white text-5xl text-center">{loadingText}</h1>
+                                        </div>
+                                    </div>
                     }
                 </div>
             </div>

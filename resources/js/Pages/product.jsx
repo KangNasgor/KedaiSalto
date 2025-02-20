@@ -9,8 +9,6 @@ export default function Product() {
     const [productType, setProductType] = useState('food');
     const {loggedIn} = usePage().props;
 
-    console.log(loggedIn);
-
     return (
         <div className="h-fit bg-[#FFB42D] pb-24">
             <Head title="Kedai Salto" />

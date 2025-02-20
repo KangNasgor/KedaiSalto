@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\ClientController;
 
 use App\Models\Order_item;
+use App\Models\Payment_proof;
 use Inertia\Inertia;
 use App\Models\Order;
 use Illuminate\Http\Request;
@@ -15,9 +16,9 @@ class OrderController extends Controller
         if(Auth::guard('user')->check()){
             $order = Order::with('user')->where('user_id', Auth::guard('user')->user()->getAuthIdentifier())->get();
             $orderItem = Order_item::with('product')->whereIn('order_id', $order->pluck('id'))->get();
-            return Inertia::render('order', compact('order', 'orderItem'));
+            $proof = Payment_proof::with('order')->whereIn('order_id', $order->pluck('id'))->first();
+            return Inertia::render('order', compact('order', 'orderItem', 'proof'));
         }
-        
         return Inertia::render('order');
     }
 }

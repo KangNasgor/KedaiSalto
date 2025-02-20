@@ -37,3 +37,5 @@ Route::get('/user/order', [OrderController::class, 'index']);
 
 Route::post('/user/payment/store', [PaymentProofController::class, 'store']);
 
+Route::put('/user/account/edit', [AccountDetailsController::class, 'editAccount']);
+

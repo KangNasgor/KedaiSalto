@@ -36,13 +36,14 @@ class PaymentProofResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('order.user.name')->label('User')->searchable(),
+                Tables\Columns\TextColumn::make('order.id')->label('Order ID')->searchable(),
                 Tables\Columns\ImageColumn::make('image')->label('Image'),
             ])
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

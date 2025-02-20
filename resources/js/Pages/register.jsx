@@ -67,28 +67,28 @@ export default function Register() {
                         <label className='font-jua text-[#FF2E2E] text-lg'>Nama</label>
                         <div className='flex items-center gap-2 bg-white rounded-md px-3 py-1'>
                             <FontAwesomeIcon icon={faUser} />
-                            <input className='bg-transparent pl-2 py-1 font-jua outline-none text-sm' type='text' placeholder='John Smith' name='name' value={formData.name} onChange={handleChange}/>
+                            <input className='bg-transparent pl-2 py-1 font-jua outline-none text-sm' type='text' placeholder='John Smith' name='name' required={true} value={formData.name} onChange={handleChange}/>
                         </div>
                     </div>
                     <div>
                         <label className='font-jua text-[#FF2E2E] text-lg'>Email</label>
                         <div className='flex items-center gap-2 bg-white rounded-md px-3 py-1'>
                             <FontAwesomeIcon icon={faEnvelope} />
-                            <input className='bg-transparent pl-2 py-1 font-jua outline-none text-sm' type='email' placeholder='johnsmith@gmail.com' name='email' value={formData.email} onChange={handleChange}/>
+                            <input className='bg-transparent pl-2 py-1 font-jua outline-none text-sm' type='email' placeholder='johnsmith@gmail.com' name='email' required={true} value={formData.email} onChange={handleChange}/>
                         </div>
                     </div>
                     <div>
                         <label className='font-jua text-[#FF2E2E] text-lg'>No. Telepon</label>
                         <div className='flex items-center gap-2 bg-white rounded-md px-3 py-1'>
                             <FontAwesomeIcon icon={faPhone} />
-                            <input className='bg-transparent pl-2 py-1 font-jua outline-none text-sm w-full' type='number' placeholder='08123456789' name='notelp' value={formData.notelp} onChange={handleChange}/>
+                            <input className='bg-transparent pl-2 py-1 font-jua outline-none text-sm w-full' type='number' placeholder='08123456789' name='notelp' required={true} value={formData.notelp} onChange={handleChange}/>
                         </div>
                     </div>
                     <div>
                         <label className='font-jua text-[#FF2E2E] text-lg'>Password</label>
                         <div className='flex items-center gap-2 bg-white rounded-md px-3 py-1'>
                             <FontAwesomeIcon icon={faLock} />
-                            <input className='bg-transparent w-full pl-2 py-1 font-jua outline-none text-sm' type={show === false ? 'password' : 'text'} placeholder='********' name='password' value={formData.password} onChange={handleChange}/>
+                            <input className='bg-transparent w-full pl-2 py-1 font-jua outline-none text-sm' type={show === false ? 'password' : 'text'} placeholder='********' name='password' required={true} value={formData.password} onChange={handleChange}/>
                             <FontAwesomeIcon icon={show === false ? faEye : faEyeSlash} onClick={toggleShowPassword}/>
                         </div>
                     </div>

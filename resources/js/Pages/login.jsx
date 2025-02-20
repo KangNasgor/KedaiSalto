@@ -83,14 +83,14 @@ export default function Login() {
                         <label className='font-jua text-[#FF2E2E] text-lg'>Email</label>
                         <div className='flex items-center gap-2 bg-white rounded-md px-3 py-1'>
                             <FontAwesomeIcon icon={faEnvelope} />
-                            <input className='bg-transparent pl-2 py-1 font-jua outline-none text-sm' type='email' placeholder='johnsmith@gmail.com' name="email" value={formData.email} onChange={handleChange}/>
+                            <input className='bg-transparent pl-2 py-1 font-jua outline-none text-sm' type='email' placeholder='johnsmith@gmail.com' name="email" value={formData.email} required={true} onChange={handleChange}/>
                         </div>
                     </div>
                     <div>
                         <label className='font-jua text-[#FF2E2E] text-lg'>Password</label>
                         <div className='flex items-center gap-2 bg-white rounded-md px-3 py-1'>
                             <FontAwesomeIcon icon={faLock} />
-                            <input className='bg-transparent w-full pl-2 py-1 font-jua outline-none text-sm' type={show === false ? 'password' : 'text'} placeholder='********' name='password' value={formData.password} onChange={handleChange}/>
+                            <input className='bg-transparent w-full pl-2 py-1 font-jua outline-none text-sm' type={show === false ? 'password' : 'text'} placeholder='********' name='password' value={formData.password} required={true} onChange={handleChange}/>
                             <FontAwesomeIcon icon={show === false ? faEye : faEyeSlash} onClick={toggleShowPassword}/>
                         </div>
                     </div>
