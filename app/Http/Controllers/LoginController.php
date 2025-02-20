@@ -14,24 +14,20 @@ class LoginController extends Controller
     public function index(){
         return Inertia::render('login');
     }
-    public function login(Request $req, Response $res){
+    public function login(Request $req){
         $user = User::where('email', $req->input('email'))->first();
-        $statusCode = $res->getStatusCode();
         if(!$user){
             return redirect()->route('login')->with('message', 'Akun tidak ditemukan.');
         }
         else{
             if(Auth::guard('user')->attempt(['email' => $req->input('email'), 'password' => $req->input('password')])){
-                if($statusCode === 200){
-                    return response()->json();
-                }
-                else{
-                    return redirect()->route('login');
-                }
+                    return response()->json([
+                        'user' => $user
+                    ], 200);
             }
-            else{
-                return redirect()->route('login')->with('message', 'Invalid Credentials');
-            }
+            return response()->json([
+                'message' => 'Kredensial salah'
+            ], 401);
         }
     }
 }

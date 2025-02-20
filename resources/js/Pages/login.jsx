@@ -48,7 +48,6 @@ export default function Login() {
                     timer: 2000,
                     timerProgressBar: true,
                 });
-
                 window.location.href = '/';
             }
             else{
@@ -62,11 +61,10 @@ export default function Login() {
             }
         }
         catch(error){
-            console.error(error);
             Swal.fire({
                 title: 'Gagal login!',
                 icon: 'error',
-                text: 'Coba lagi nanti',
+                text: error.response.data.message,
                 confirmButtonText: 'OK',
                 confirmButtonColor: '#FF2E2E',
             });
