@@ -49,7 +49,6 @@ class CartController extends Controller
                 'cart_id' => $cart->id,
             ],
             [
-                'quantity' => 0,
                 'updated_at' => now(),
             ]
         );

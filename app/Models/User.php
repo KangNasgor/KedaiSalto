@@ -55,10 +55,6 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
-
-    public function product(): HasOne{
-        return $this->hasOne(Product::class, 'id', 'product_id');
-    }
     public function order(){
         return $this->hasMany(Order::class, 'user_id', 'id');
     }

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Head, Link, usePage } from '@inertiajs/inertia-react'
-import { faArrowLeft, faEye, faEyeSlash, faLock } from '@fortawesome/free-solid-svg-icons'
+import { faArrowLeft, faEye, faEyeSlash, faLock, faEnvelope, faUser, faPhone } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import axios from 'axios'
 import Swal from 'sweetalert2'
@@ -112,22 +112,27 @@ export default function Account() {
                             <div className='p-5 rounded-md bg-[#FF2E2E]'>
                                 <h1 className='font-jua text-white text-2xl'>Ubah akun anda</h1>
                                 <form className='w-full grid gap-x-24 gap-y-5 grid-cols-2' onSubmit={submitEditAccount}>
-                                    <div className='flex flex-col'>
-                                        <label className='font-jua text-[#FF2E2E]'>Nama</label>
-                                        <input className='rounded-md pl-2 py-1 text-sm disabled:bg-white' name='nama' value={formEditData.nama} required={true} onChange={handleEditChange} />
-                                    </div>
-                                    <div className='flex flex-col'>
-                                        <label className='font-jua text-[#FF2E2E]'>Alamat Email</label>
-                                        <input className='rounded-md pl-2 py-1 text-sm disabled:bg-white' name='email' value={formEditData.email} required={true} onChange={handleEditChange} />
-                                    </div>
-                                    <div className='flex flex-col'>
-                                        <label className='font-jua text-[#FF2E2E]'>Nomor Telepon</label>
-                                        <input className='rounded-md pl-2 py-1 text-sm disabled:bg-white' name='notelp' type='number' step='1' value={formEditData.notelp} required={true} onChange={handleEditChange} />
-                                    </div>
-                                    <div className='flex flex-col'>
-                                        <label className='font-jua text-[#FF2E2E]'>Password</label>
+                                <div className=''>
                                         <div className='flex items-center gap-2 bg-white rounded-md px-3 py-1'>
-                                            <FontAwesomeIcon icon={faLock}/>
+                                            <FontAwesomeIcon icon={faUser} />
+                                            <input className='bg-transparent w-full pl-2 py-1 font-jua outline-none text-sm' type='text' placeholder='johndoe' name='nama' value={formEditData.nama} required={true} onChange={handleEditChange} />
+                                        </div>
+                                    </div>
+                                    <div className=''>
+                                        <div className='flex items-center gap-2 bg-white rounded-md px-3 py-1'>
+                                            <FontAwesomeIcon icon={faEnvelope} />
+                                            <input className='bg-transparent w-full pl-2 py-1 font-jua outline-none text-sm' type='email' placeholder='johndoe123@gmail.com' name='email' value={formEditData.email} required={true} onChange={handleEditChange} />
+                                        </div>
+                                    </div>
+                                    <div className=''>
+                                        <div className='flex items-center gap-2 bg-white rounded-md px-3 py-1'>
+                                            <FontAwesomeIcon icon={faPhone} />
+                                            <input className='bg-transparent w-full pl-2 py-1 font-jua outline-none text-sm' type='number' placeholder='08123456789' name='notelp' value={formEditData.notelp} required={true} onChange={handleEditChange} />
+                                        </div>
+                                    </div>
+                                    <div className=''>
+                                        <div className='flex items-center gap-2 bg-white rounded-md px-3 py-1'>
+                                            <FontAwesomeIcon icon={faLock} />
                                             <input className='bg-transparent w-full pl-2 py-1 font-jua outline-none text-sm' type={showPassword === false ? 'password' : 'text'} placeholder='********' name='password' value={formEditData.password} required={true} onChange={handleEditChange} />
                                             <FontAwesomeIcon icon={showPassword === false ? faEye : faEyeSlash} onClick={toggleShowPassword} />
                                         </div>
