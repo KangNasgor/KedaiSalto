@@ -59,7 +59,7 @@ function EsLumut({prev, next}) {
             <p className='text-[#FF2E2E] font-jua text-lg mb-5'>
                 Minuman segar dengan tekstur unik dan rasa manis yang pas, menghadirkan sensasi lembut dan menyegarkan di setiap tegukan.
             </p>
-            <Link href="/user/product" className='font-jua bg-[#FF2E2E] text-white px-4 py-3 rounded-lg block mx-auto md:static md:mx-0 w-fit'>
+            <Link href="/user/product" className='font-jua bg-[#FF2E2E] text-white px-4 py-3 rounded-lg block mx-auto md:static md:mx-0 w-fit transform transition-all duration-200 hover:scale-110 hover:bg-[#FF9100]'>
                 BUY NOW
             </Link>
         </div>
@@ -89,7 +89,7 @@ function Dimsum({prev, next}) {
             <p className='text-[#FF2E2E] font-jua text-lg mb-5'>
                 Dimsum lezat dengan isian gurih dan kulit yang lembut, dibuat dari bahan pilihan untuk menghadirkan cita rasa autentik di setiap gigitan.
             </p>
-            <Link href="/user/product" className='font-jua bg-[#FF2E2E] text-white px-4 py-3 rounded-lg block mx-auto md:static md:mx-0 w-fit'>
+            <Link href="/user/product" className='font-jua bg-[#FF2E2E] text-white px-4 py-3 rounded-lg block mx-auto md:static md:mx-0 w-fit transform transition-all duration-200 hover:scale-110 hover:bg-[#FF9100]'>
                 BUY NOW
             </Link>
         </div>
@@ -119,7 +119,7 @@ function MashedPotato({prev, next}) {
             <p className='text-[#FF2E2E] font-jua text-lg mb-5'>
                 Mashed potato creamy dengan tekstur lembut dan rasa gurih, dibuat dari kentang pilihan untuk sensasi lezat di setiap suapan.
             </p>
-            <Link href="/user/product" className='font-jua bg-[#FF2E2E] text-white px-4 py-3 rounded-lg block mx-auto md:static md:mx-0 w-fit'>
+            <Link href="/user/product" className='font-jua bg-[#FF2E2E] text-white px-4 py-3 rounded-lg block mx-auto md:static md:mx-0 w-fit transform transition-all duration-200 hover:scale-110 hover:bg-[#FF9100]'>
                 BUY NOW
             </Link>
         </div>

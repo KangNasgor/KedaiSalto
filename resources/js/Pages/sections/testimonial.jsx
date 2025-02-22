@@ -1,14 +1,20 @@
 import React, { useEffect, useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowRight, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
 export default function Testimonial() {
     let index = 0;
     const carouselItems = document.querySelector('.carousel-item');
     const carouselChildren = document.querySelectorAll('.carousel-child');
+    const totalChildren = carouselChildren.length - 1;
 
     const onNextCarousel = () => {
-        const totalChildren = carouselChildren.length - 1;
         if (index < totalChildren) {
             index++;
+            carouselItems.style.transform = `translateX(-${index * 100}%)`;
+        }
+        else {
+            index = 0;
             carouselItems.style.transform = `translateX(-${index * 100}%)`;
         }
     }
@@ -17,12 +23,16 @@ export default function Testimonial() {
             index--;
             carouselItems.style.transform = `translateX(-${index * 100}%)`;
         }
+        else {
+            index = totalChildren;
+            carouselItems.style.transform = `translateX(-${index * 100}%)`;
+        }
     }
 
     return (
-        <div className="h-screen bg-[#FFB42D]">
-            <div className="w-11/12 overflow-hidden mx-auto bg-[#e69f20] rounded-lg py-10">
-                <div className="flex transform transition-all duration-300 carousel-item">
+        <div className="h-screen pt-28 bg-[#FFB42D]">
+            <div className="w-11/12 overflow-hidden mx-auto bg-[#e69f20] rounded-lg py-10 relative"> {/* Visible Div for user, this is the container of the carousel */}
+                <div className="flex transform transition-all duration-300 carousel-item"> {/** This div contains all carousel children, the div is moved left and right to simulate carousel */}
                     <div className="min-w-full carousel-child">
                         <div className="bg-[#FF2E2E] mx-auto w-11/12 rounded-md p-5 flex justify-center gap-5">
                             <div className="bg-white p-3 rounded-md">
@@ -63,10 +73,20 @@ export default function Testimonial() {
                         </div>
                     </div>
                 </div>
-            </div>
-            <div className="flex w-full justify-between">
-                <button onClick={onPrevCarousel}>Prev</button>
-                <button onClick={onNextCarousel}>Next</button>
+                <div className="flex justify-between w-full px-5 absolute top-0 left-1/2 h-full -translate-x-1/2">
+                    <button onClick={onPrevCarousel}>
+                        <div>
+                            <div className="h-1 w-3 transform -rotate-45 -translate-y-px bg-white rounded-sm"></div>
+                            <div className="h-1 w-3 transform rotate-45 translate-y-px bg-white rounded-sm"></div>
+                        </div>
+                    </button>
+                    <button onClick={onNextCarousel}>
+                        <div>
+                            <div className="h-1 w-3 transform rotate-45 -translate-y-px bg-white rounded-sm"></div>
+                            <div className="h-1 w-3 transform -rotate-45 translate-y-px bg-white rounded-sm"></div>
+                        </div>
+                    </button>
+                </div>
             </div>
         </div>
     );
