@@ -30,7 +30,7 @@ Route::controller(ProductController::class)->group(function(){
 });
 
 Route::controller(CartController::class)->group(function(){
-    Route::get('/user/cart', 'index');
+    Route::get('/user/cart', 'index')->name('user-cart');
 });
 
 Route::get('/user/order', [OrderController::class, 'index']);

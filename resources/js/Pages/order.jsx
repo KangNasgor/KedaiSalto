@@ -115,7 +115,6 @@ export default function Order() {
             }
         }
         catch (error) {
-            console.error(error)
             Swal.fire({
                 title: 'Gagal mengunggah bukti',
                 text: 'Coba lagi nanti.',

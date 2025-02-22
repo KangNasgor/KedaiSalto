@@ -22,6 +22,7 @@ export default function Makanan() {
     window.onclick = function (event) {
         if (event.target.classList.contains('modal')) {
             setSelectedProduct(null);
+            setProductCount(0);
         }
     }
 
@@ -40,44 +41,46 @@ export default function Makanan() {
 
     const handleBuyProduct = async () => {
         try {
-            const response = await axios.get('/api/user/login/check', {
-                headers: { 'Accept': 'application/json' },
-            });
-
-            if (response.data.loggedIn === true) {
-                if (productCount > 0) {
-                    try {
-                        const cartData = {
-                            user_id : response.data.user.id,
-                            product_id : selectedProduct.id,
-                            quantity : productCount,
-                        };
-                        console.log(cartData);
-                        const res = await axios.post(`/api/user/cart/store`, cartData, {
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'Accept' : 'application/json'
-                            }
-                        });
-                        Swal.fire({
-                            title: 'Success!',
-                            text: 'Berhasil menambah produk kedalam keranjang',
-                            confirmButtonText: 'OK',
-                            icon: 'success',
-                        });
-                    }
-                    catch (error) {
-                        alert('Something went wrong, Try again.' + error);
-                        console.error(error);
+            if (productCount > 0) {
+                try {
+                    const cartData = {
+                        product_id: selectedProduct.id,
+                        quantity: productCount,
+                    };
+                    console.log(cartData);
+                    const res = await axios.post(`/api/user/cart/store`, cartData, {
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json'
+                        }
+                    });
+                    Swal.fire({
+                        title: 'Success!',
+                        text: 'Berhasil menambah produk kedalam keranjang',
+                        confirmButtonText: 'OK',
+                        icon: 'success',
+                    });
+                }
+                catch (error) {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: error.response.data.message,
+                        confirmButtonText: 'OK',
+                        icon: 'error',
+                    });
+                    if(error.response.data.redirect_url){
+                        window.location.href = error.response.data.redirect_url;
                     }
                 }
             }
-            else{
-                alert('Anda harus login dahulu.');
-            }
         }
         catch (error) {
-            alert(error);
+            Swal.fire({
+                title: 'Error!',
+                text: error,
+                confirmButtonText: 'OK',
+                icon: 'error',
+            });
         }
     }
 

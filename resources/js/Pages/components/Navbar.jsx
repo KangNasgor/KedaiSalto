@@ -13,14 +13,11 @@ export default function Navbar() {
         return () => window.removeEventListener("scroll", handleScroll);
     }, [])
     return (
-        <div className={`fixed z-50 w-full justify-between hidden sm:flex py-4 text-2xl md:mr-7 lg:pr-10 font-jua transform transition-all duration-300 ${isScrolled > 0 ? "bg-[#FF2E2E] shadow-xl" : "bg-none shadow-none"}`}>
-            <div className="pl-3">
-                <h1 className='text-white font-jua text-2xl sm:mt-1 w-fit'>Kedai Salto</h1>
-            </div>
+        <div className={`fixed z-50 w-full justify-end hidden sm:flex py-4 text-2xl md:mr-7 lg:pr-10 font-jua transform transition-all duration-300 ${isScrolled > 0 ? "bg-[#FF2E2E] shadow-xl" : "bg-none shadow-none"}`}>
             <div className="flex gap-6">
-                <Link href="/" className={`relative ${url === "/" ? 'text-white' : 'text-white'} before:h-1 before:absolute before:bg-white before:content-[''] before:w-0 before:bottom-0 before:rounded-md before:hover:w-full before:transition-all before:duration-300`}>
+                <a href="/" className={`relative ${url === "/" ? 'text-white' : 'text-white'} before:h-1 before:absolute before:bg-white before:content-[''] before:w-0 before:bottom-0 before:rounded-md before:hover:w-full before:transition-all before:duration-300`}>
                     home
-                </Link>
+                </a>
                 <Link href="/user/product" className={`relative ${url === "/user/product" ? 'text-white' : 'text-white'} before:h-1 before:absolute before:bg-white before:content-[''] before:w-0 before:bottom-0 before:rounded-md before:hover:w-full before:transition-all before:duration-300`}>
                     product
                 </Link>

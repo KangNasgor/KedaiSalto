@@ -3,77 +3,92 @@
 namespace App\Http\Controllers\ClientController;
 
 use App\Models\Cart;
-use App\Models\Order;
-use App\Models\Promo_code;
 use Inertia\Inertia;
+use App\Models\Order;
 use App\Models\Cart_item;
 use App\Models\Order_item;
+use App\Models\Promo_code;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 
 class CartController extends Controller
 {
     public function index()
     {
-        if(Auth::guard('user')->check()){
+        if (Auth::guard('user')->check()) {
             $cart = Cart::where('user_id', Auth::guard('user')->user()->getAuthIdentifier())->first();
-            if($cart){
+            if ($cart) {
                 $cartItems = Cart_item::with('product')->where('cart_id', $cart->id)->get();
                 return Inertia::render('cart', compact('cartItems'));
-            }
-            else{
+            } else {
                 $cartItems = [];
                 return Inertia::render('cart', compact('cartItems'));
             }
-        }
-        else{
+        } else {
             return Inertia::render('cart');
         }
     }
-    public function storeCart(Request $req){
-        $data = $req->validate([
-            'user_id' => 'required|integer',
-            'product_id' => 'required|integer',
-            'quantity' => 'required|integer'
-        ]);
-        $cart = Cart::firstOrCreate(['user_id' => $data['user_id']], [
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
-
-        $cartItem = Cart_item::updateOrCreate(
-            [
-                'product_id' => $data['product_id'],
-                'cart_id' => $cart->id,
-            ],
-            [
+    public function storeCart(Request $req)
+    {
+        if (Auth::guard('user')->check()) {
+            $data = $req->validate([
+                'product_id' => 'required|integer',
+                'quantity' => 'required|integer',
+            ]);
+            $user = Auth::guard('user')->user();
+            $cart = Cart::firstOrCreate([
+                'user_id' => $user['id'],
                 'updated_at' => now(),
-            ]
-        );
-        $cartItem->increment('quantity', $data['quantity']);
-        $cartItem->save();
+            ], [
+                'created_at' => now(),
+            ]);
 
-        return response()->json([
-            'data' => $data
-        ], 200);
+            $cartItem = Cart_item::updateOrCreate(
+                [
+                    'product_id' => $data['product_id'],
+                    'cart_id' => $cart->id,
+                    'quantity' => $data['quantity'],
+                ],
+                [
+                    'created_at' => now(),
+                ]
+            );
+            $cartItem->save();
+
+            return response()->json([
+                'message' => 'Berhasil menambahkan produk kedalam keranjang.',
+            ], 200);
+        }
+        else{
+            $data = $req->validate([
+                'product_id' => 'required|integer',
+                'quantity' => 'integer|required',
+            ]);
+
+            Cache::put('guest_cart_data', $data, 300);
+
+            return response()->json([
+                'message' => 'Anda harus login terlebih dahulu!',
+                'redirect_url' => url('/user/login'),
+            ], 401);
+        }
     }
-
-    public function updateQuantity(Request $req){
+    public function updateQuantity(Request $req)
+    {
         $data = $req->validate([
-            'quantities' => 'required|array'
+            'quantities' => 'required|array',
         ]);
-        
-        foreach($data['quantities'] as $item_id => $quantity){
+
+        foreach ($data['quantities'] as $item_id => $quantity) {
             $item = Cart_item::find($item_id);
-            if($item){
-                if($quantity > 0){
+            if ($item) {
+                if ($quantity > 0) {
                     $item->update([
                         'quantity' => $quantity,
                     ]);
-                }
-                else{
+                } else {
                     $item->delete();
                 }
             }
@@ -82,7 +97,8 @@ class CartController extends Controller
         return response()->json(['message' => 'Data received']);
     }
 
-    public function checkout(Request $req){
+    public function checkout(Request $req)
+    {
         $data = $req->validate([
             'products' => 'required|array',
             'user_id' => 'required|integer',
@@ -93,9 +109,9 @@ class CartController extends Controller
 
         $price = $data['price'];
 
-        if(!empty($data['promo_code'])){
+        if (!empty($data['promo_code'])) {
             $promo = Promo_code::where('code', $data['promo_code'])->first();
-            if($promo){
+            if ($promo) {
                 $discount = $promo->discount / 100;
                 $price -= $price * $discount;
             }
@@ -107,7 +123,7 @@ class CartController extends Controller
             'created_at' => now(),
         ]);
 
-        foreach($data['products'] as $product){
+        foreach ($data['products'] as $product) {
             Order_item::create([
                 'order_id' => $order->id,
                 'product_id' => $product['product_id'],
@@ -117,13 +133,13 @@ class CartController extends Controller
             ]);
         }
 
-        if($cart){
+        if ($cart) {
             Cart_item::where('cart_id', $cart->id)->delete();
             $cart->delete();
         }
 
         return response()->json([
-            'message' => $data
+            'message' => $data,
         ], 200);
     }
 }

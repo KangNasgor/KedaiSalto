@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import Hero from './sections/hero'
 import About from './sections/about'
 import { Head, Link, usePage } from '@inertiajs/inertia-react'
@@ -13,32 +13,37 @@ import axios from 'axios'
 export default function Login() {
     const [show, setShow] = useState(false);
     const toggleShowPassword = () => setShow(prev => !prev);
+    const { data } = usePage().props;
 
     const [formData, setFormData] = useState({
         email: '',
         password: '',
     });
 
+    useEffect(() => {
+        console.log(data)
+    }, []);
+
     const handleChange = (e) => {
         setFormData(formData => ({
             ...formData,
-            [e.target.name] : e.target.value,
+            [e.target.name]: e.target.value,
         }));
     }
     const handleSubmit = async (e) => {
-        try{
+        try {
             e.preventDefault();
             formData._token = document.querySelector('meta[name="csrf-token"]').content;
             const response = await axios.post('/user/login/store', formData, {
-                headers:{
-                    "X-CSRF-TOKEN" : document.querySelector('meta[name="csrf-token"]').content,
-                    "Accept" : "application/json",
-                    "Content-Type" : "application/json",
-                    "X-Requested-with" : "XMLHttpRequest",
+                headers: {
+                    "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').content,
+                    "Accept": "application/json",
+                    "Content-Type": "application/json",
+                    "X-Requested-with": "XMLHttpRequest",
                 },
                 withCredentials: true,
             });
-            if(response.status === 200){
+            if (response.status === 200) {
                 Swal.fire({
                     title: 'Berhasil login!',
                     icon: 'success',
@@ -48,9 +53,14 @@ export default function Login() {
                     timer: 2000,
                     timerProgressBar: true,
                 });
-                window.location.href = '/';
+                if (response.data.redirect_url) {
+                    window.location.href = response.data.redirect_url;
+                }
+                else if(!response.data.redirect_url){
+                    window.location.href = "/";
+                }
             }
-            else{
+            else {
                 Swal.fire({
                     title: 'Gagal login!',
                     icon: 'error',
@@ -60,7 +70,7 @@ export default function Login() {
                 });
             }
         }
-        catch(error){
+        catch (error) {
             Swal.fire({
                 title: 'Gagal login!',
                 icon: 'error',
@@ -81,15 +91,15 @@ export default function Login() {
                         <label className='font-jua text-[#FF2E2E] text-lg'>Email</label>
                         <div className='flex items-center gap-2 bg-white rounded-md px-3 py-1'>
                             <FontAwesomeIcon icon={faEnvelope} />
-                            <input className='bg-transparent pl-2 py-1 font-jua outline-none text-sm' type='email' placeholder='johnsmith@gmail.com' name="email" value={formData.email} required={true} onChange={handleChange}/>
+                            <input className='bg-transparent pl-2 py-1 font-jua outline-none text-sm' type='email' placeholder='johnsmith@gmail.com' name="email" value={formData.email} required={true} onChange={handleChange} />
                         </div>
                     </div>
                     <div>
                         <label className='font-jua text-[#FF2E2E] text-lg'>Password</label>
                         <div className='flex items-center gap-2 bg-white rounded-md px-3 py-1'>
                             <FontAwesomeIcon icon={faLock} />
-                            <input className='bg-transparent w-full pl-2 py-1 font-jua outline-none text-sm' type={show === false ? 'password' : 'text'} placeholder='********' name='password' value={formData.password} required={true} onChange={handleChange}/>
-                            <FontAwesomeIcon icon={show === false ? faEye : faEyeSlash} onClick={toggleShowPassword}/>
+                            <input className='bg-transparent w-full pl-2 py-1 font-jua outline-none text-sm' type={show === false ? 'password' : 'text'} placeholder='********' name='password' value={formData.password} required={true} onChange={handleChange} />
+                            <FontAwesomeIcon icon={show === false ? faEye : faEyeSlash} onClick={toggleShowPassword} />
                         </div>
                     </div>
                     <button type='submit' className='block mb-4 mt-5 mx-auto bg-[#FF2E2E] hover:bg-[#FFB42D] sm:hover:bg-[#FBD288] rounded-xl w-fit px-4 py-3 text-[#FFB42D] hover:text-[#FF2E2E] hover:scale-110 active:scale-105 font-jua transition-all duration-200 ease-in-out'>

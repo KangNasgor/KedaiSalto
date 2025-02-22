@@ -20,7 +20,7 @@ export default function Product() {
             <div className="mt-10 lg:mt-32 pr-5 md:pr-0 pl-5 flex flex-col md:flex-row">
                 <div className="w-fit mb-5 md:mb-0 md:w-3/12">
                     <div className="bg-[#FF2E2E] w-fit px-5 py-2 rounded-md flex md:flex-none">
-                        <h1 className="font-jua text-white mb-2">Types :</h1>
+                        <h1 className="font-jua text-white mb-2">Filter :</h1>
                         <div>
                             <h2 className={`font-jua ml-2 cursor-pointer ${productType === 'food' ? 'text-[#FFB42D]' : 'text-white'}`} onClick={() => setProductType('food')}>Makanan</h2>
                             <h2 className={`font-jua ml-2 cursor-pointer ${productType === 'drink' ? 'text-[#FFB42D]' : 'text-white'}`} onClick={() => setProductType('drink')}>Minuman</h2>
