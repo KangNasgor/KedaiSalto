@@ -40,21 +40,19 @@ class CartController extends Controller
             $user = Auth::guard('user')->user();
             $cart = Cart::firstOrCreate([
                 'user_id' => $user['id'],
-                'updated_at' => now(),
             ], [
                 'created_at' => now(),
             ]);
-
             $cartItem = Cart_item::updateOrCreate(
                 [
                     'product_id' => $data['product_id'],
                     'cart_id' => $cart->id,
-                    'quantity' => $data['quantity'],
                 ],
                 [
                     'created_at' => now(),
                 ]
             );
+            $cartItem->increment('quantity', $data['quantity']);
             $cartItem->save();
 
             return response()->json([

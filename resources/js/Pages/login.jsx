@@ -13,16 +13,11 @@ import axios from 'axios'
 export default function Login() {
     const [show, setShow] = useState(false);
     const toggleShowPassword = () => setShow(prev => !prev);
-    const { data } = usePage().props;
 
     const [formData, setFormData] = useState({
         email: '',
         password: '',
     });
-
-    useEffect(() => {
-        console.log(data)
-    }, []);
 
     const handleChange = (e) => {
         setFormData(formData => ({

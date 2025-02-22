@@ -47,7 +47,6 @@ export default function Makanan() {
                         product_id: selectedProduct.id,
                         quantity: productCount,
                     };
-                    console.log(cartData);
                     const res = await axios.post(`/api/user/cart/store`, cartData, {
                         headers: {
                             'Content-Type': 'application/json',
