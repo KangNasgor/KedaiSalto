@@ -141,7 +141,7 @@ export default function Order() {
                 <div className="w-10/12 mx-auto flex flex-col gap-5 mt-36">
                     {
                         order && loggedIn === true ? order.map((order) => (
-                            <div className="bg-[#e69f20] w-full flex gap-5 items-center rounded-md px-4 py-4" key={order.id}>
+                            <div className="bg-[#e69f20] w-full flex gap-5 items-center rounded-md px-4 py-4 shadow-xl" key={order.id}>
                                 <div className="grid grid-cols-3 gap-5 mb-5 w-6/12">
                                     {
                                         orderItem.filter(item => item.order_id === order.id).map(item => (

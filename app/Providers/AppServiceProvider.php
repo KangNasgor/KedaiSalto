@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\Product;
 use App\Observers\ProductObserver;
+use Filament\Notifications\Livewire\DatabaseNotifications;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\ServiceProvider;
 

@@ -2,19 +2,24 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\OrderResource\Pages;
-use App\Filament\Resources\OrderResource\RelationManagers;
-use App\Models\Order;
-use App\Models\User;
 use Filament\Forms;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
+use App\Models\User;
 use Filament\Tables;
+use App\Models\Order;
+use Livewire\Component;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Facades\Filament;
+use Filament\Resources\Resource;
+use Filament\Tables\Actions\Action;
+use Illuminate\Support\Facades\Auth;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
+use Filament\Notifications\Notification;
+use Illuminate\Database\Eloquent\Builder;
+use App\Filament\Resources\OrderResource\Pages;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\OrderResource\RelationManagers;
 
 class OrderResource extends Resource
 {
@@ -67,6 +72,12 @@ class OrderResource extends Resource
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
+                Action::make('Confirm')->visible(
+                    fn ($record) => $record->confirmed === "False"
+                )->action(fn($record) => self::confirmOrder($record))->icon('heroicon-o-check'),
+                Action::make('Cancel')->color('danger')->visible(
+                    fn($record) => $record->confirmed === "True"
+                )->action(fn($record) => self::cancelOrder($record))->icon('heroicon-o-x-circle'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -74,7 +85,39 @@ class OrderResource extends Resource
                 ]),
             ]);
     }
-
+    public static function confirmOrder($order){
+        $order->load('order_item.product');
+        foreach($order->order_item as $item){
+            $product = $item->product;
+            if($product && $product->stock >= $order->quantity){
+                $product->decrement('stock', $item->quantity);
+            }
+            else{
+                Notification::make()->danger()->title('Error');
+            }
+        }
+        $order->update([
+            'confirmed' => "True"
+        ]);
+        Notification::make()->success()->title('Order confirmed')->send();
+    }
+    public static function cancelOrder(Order $order){
+        $order->load('order_item.product');
+        foreach($order->order_item as $item){
+            $product = $item->product;
+            if($product){
+                $product->increment('stock', $item->quantity);
+            }
+            else{
+                Notification::make()->danger()->title('Error saat cancel order')->send();
+            }
+        }
+        $order->update([
+            'confirmed' => "False",
+        ]);
+        $user = Auth::guard('user')->user();
+        Notification::make()->success()->title('Order canceled')->send();
+    }
     public static function getRelations(): array
     {
         return [
