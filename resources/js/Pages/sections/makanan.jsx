@@ -184,6 +184,7 @@ export default function Makanan() {
                                                             <div className="w-7/12">
                                                                 <div className="mb-3">
                                                                     <h1 className="font-jua text-white text-xl">{selectedProduct.name}</h1>
+                                                                    <p className="font-jua text-white text-md w-6/12">{selectedProduct.description}</p>
                                                                     <h1 className="font-jua text-white text-md">Stock : {selectedProduct.stock}</h1>
                                                                     <h1 className="font-jua text-white text-md">Harga : Rp{selectedProduct.price}</h1>
                                                                 </div>

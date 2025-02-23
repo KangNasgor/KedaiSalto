@@ -26,7 +26,8 @@ class CartController extends Controller
                 $cartItems = [];
                 return Inertia::render('cart', compact('cartItems'));
             }
-        } else {
+        }
+        else {
             return Inertia::render('cart');
         }
     }

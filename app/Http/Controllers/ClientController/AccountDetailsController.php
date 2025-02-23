@@ -44,6 +44,7 @@ class AccountDetailsController extends Controller{
         
         $user->update([
             'name' => $data['nama'],
+            'address' => $req['address'] ?? null,
             'email' => $data['email'],
             'notelp' => $data['notelp'],
             'password' => Hash::make($data['password']),

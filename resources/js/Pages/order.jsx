@@ -156,8 +156,9 @@ export default function Order() {
                                 <div className="w-6/12">
                                     <h1 className="font-jua text-white">Tanggal order : {order.created_at.slice(0, 10)}</h1>
                                     <h1 className="font-jua text-white">Total harga : Rp{order.price}</h1>
-                                    <h1 className="font-jua text-white">Status : {order.confirmed === "False" ? 'Belum di konfirmasi' : 'Terkonfirmasi'}</h1>
-                                    <h1 className={`font-jua text-white ${order.confirmed === "True" ? "block" : 'hidden'}`}>Status pembayaran : {order.paid === "False" ? 'Belum dibayar' : 'Sudah dibayar'}</h1>
+                                    <h1 className="font-jua text-white">Status : <p className={`${order.confirmed === "True" ? 'text-green-600' : 'text-[#FF2E2E]'}`}>{order.confirmed === "False" ? 'Belum di konfirmasi' : 'Terkonfirmasi'}</p></h1>
+                                    <h1 className={`font-jua text-white ${order.confirmed === "True" ? "block" : 'hidden'}`}>Status pembayaran : <p className={`${order.paid === "True" ? 'text-green-600' : 'text-[#FF2E2E]'}`}>{order.paid === "False" ? 'Belum dibayar' : 'Sudah dibayar'}</p></h1>
+                                    <h1 className={`font-jua text-white ${order.paid === "True" ? "block" : "hidden"}`}>Produk akan segera dikirim ke alamat yang telah anda pilih</h1>
                                     <button onClick={() => toggleModal(order.id)} className={`px-3 py-2 rounded-md font-jua text-white bg-[#FF2E2E] mt-3 ${order.confirmed === "True" ? 'block' : 'hidden'}`}>{proof && proof.some(item => item.order_id === order.id)  ? 'Bukti pembayaran' : 'Upload bukti pembayaran'}</button>
                                     {
                                         modal &&

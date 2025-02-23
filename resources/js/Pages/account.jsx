@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Head, Link, usePage } from '@inertiajs/inertia-react'
-import { faArrowLeft, faEye, faEyeSlash, faLock, faEnvelope, faUser, faPhone } from '@fortawesome/free-solid-svg-icons'
+import { faArrowLeft, faEye, faEyeSlash, faLock, faEnvelope, faUser, faPhone, faLocationDot } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import axios from 'axios'
 import Swal from 'sweetalert2'
@@ -17,6 +17,7 @@ export default function Account() {
         setFormEditData({
             id: user.id,
             nama: user.name,
+            address: user.address,
             email: user.email,
             notelp: user.notelp,
             password: '',
@@ -75,6 +76,7 @@ export default function Account() {
         }
     }
 
+
     return (
         <div className='h-screen bg-[#FFB42D] flex items-center'>
             <div onClick={() => { history.back() }} className='absolute top-2 left-3 flex gap-3 items-center cursor-pointer'>
@@ -98,8 +100,8 @@ export default function Account() {
                         <input className='rounded-md pl-2 py-1 text-sm disabled:bg-white' disabled={true} placeholder={user.notelp} />
                     </div>
                     <div className='flex flex-col'>
-                        <label className='font-jua text-[#FF2E2E]'>Password</label>
-                        <input className='rounded-md pl-2 py-1 text-sm disabled:bg-white' disabled={true} placeholder='*******' />
+                        <label className='font-jua text-[#FF2E2E]'>Alamat</label>
+                        <input className='rounded-md pl-2 py-1 text-sm disabled:bg-white' disabled={true} placeholder={user.address ? user.address : 'Alamat belum dipilih'} />
                     </div>
                 </form>
                 <div className='w-fit mt-5 flex gap-5'>
@@ -112,7 +114,7 @@ export default function Account() {
                             <div className='p-5 rounded-md bg-[#FF2E2E]'>
                                 <h1 className='font-jua text-white text-2xl'>Ubah akun anda</h1>
                                 <form className='w-full grid gap-x-24 gap-y-5 grid-cols-2' onSubmit={submitEditAccount}>
-                                <div className=''>
+                                    <div className=''>
                                         <div className='flex items-center gap-2 bg-white rounded-md px-3 py-1'>
                                             <FontAwesomeIcon icon={faUser} />
                                             <input className='bg-transparent w-full pl-2 py-1 font-jua outline-none text-sm' type='text' placeholder='johndoe' name='nama' value={formEditData.nama} required={true} onChange={handleEditChange} />
@@ -128,6 +130,12 @@ export default function Account() {
                                         <div className='flex items-center gap-2 bg-white rounded-md px-3 py-1'>
                                             <FontAwesomeIcon icon={faPhone} />
                                             <input className='bg-transparent w-full pl-2 py-1 font-jua outline-none text-sm' type='number' placeholder='08123456789' name='notelp' value={formEditData.notelp} required={true} onChange={handleEditChange} />
+                                        </div>
+                                    </div>
+                                    <div className=''>
+                                        <div className='flex items-center gap-2 bg-white rounded-md px-3 py-1'>
+                                            <FontAwesomeIcon icon={faLocationDot} />
+                                            <input className='bg-transparent w-full pl-2 py-1 font-jua outline-none text-sm' type="text" placeholder='Alamat anda' name='address' value={formEditData.address} onChange={handleEditChange} />
                                         </div>
                                     </div>
                                     <div className=''>

@@ -155,7 +155,7 @@ export default function Cart() {
     }
 
     return (
-        <div className={`bg-[#FFB42D] ${loggedIn === false || loggedIn === null || cartItems.length === 0 ? 'h-screen' : 'h-fit pb-10'}`}>
+        <div className={`bg-[#FFB42D] ${loggedIn === false || loggedIn === null || cartItems?.length === 0 ? 'h-screen' : 'h-fit pb-10'}`}>
             <Head title="Kedai Salto" />
             <Navbar />
             <Sidebar />
@@ -172,7 +172,7 @@ export default function Cart() {
                                 </div>
                             </div>
                             :
-                            loggedIn === true && cartItems.length > 0 ?
+                            loggedIn === true && cartItems?.length > 0 ?
                                 <div className="px-5">
                                     <div className="grid grid-cols-3 gap-5">
                                         {
@@ -214,7 +214,7 @@ export default function Cart() {
                                     </div>
                                 </div>
                                 :
-                                loggedIn === true && cartItems.length === 0 ?
+                                loggedIn === true && cartItems?.length === 0 ?
                                     <div className="w-full flex justify-center items-center">
                                         <div className="flex flex-col items-center gap-3">
                                             <h1 className="font-jua text-white/50 text-5xl text-center">Keranjang kosong, silahkan tambahkan produk kedalam keranjang!</h1>
