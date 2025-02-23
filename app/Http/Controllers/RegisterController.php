@@ -28,6 +28,7 @@ class RegisterController extends Controller
             'email' => $req->input('email'),
             'name' => $req->input('name'),
             'notelp' => $req->input('notelp'),
+            'address' => $req->input('address'),
             'password' => Hash::make($req->input('password')),
         ]);
         return redirect()->route('login');

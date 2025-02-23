@@ -145,7 +145,7 @@ export default function Order() {
                                 <div className="grid grid-cols-3 gap-5 mb-5 w-6/12">
                                     {
                                         orderItem.filter(item => item.order_id === order.id).map(item => (
-                                            <div key={item.id}>
+                                            <div key={item.id} className="bg-[#FF2E2E] px-3 py-2 rounded-md">
                                                 <img src={"/storage/" + item.product.image} className="w-36" />
                                                 <h1 className="font-jua text-white">{item.product.name}</h1>
                                                 <h1 className="font-jua text-white">Jumlah : {item.quantity}</h1>
@@ -154,12 +154,22 @@ export default function Order() {
                                     }
                                 </div>
                                 <div className="w-6/12">
-                                    <h1 className="font-jua text-white">Tanggal order : {order.created_at.slice(0, 10)}</h1>
-                                    <h1 className="font-jua text-white">Total harga : Rp{order.price}</h1>
-                                    <h1 className="font-jua text-white">Status : <p className={`${order.confirmed === "True" ? 'text-green-600' : 'text-[#FF2E2E]'}`}>{order.confirmed === "False" ? 'Belum di konfirmasi' : 'Terkonfirmasi'}</p></h1>
-                                    <h1 className={`font-jua text-white ${order.confirmed === "True" ? "block" : 'hidden'}`}>Status pembayaran : <p className={`${order.paid === "True" ? 'text-green-600' : 'text-[#FF2E2E]'}`}>{order.paid === "False" ? 'Belum dibayar' : 'Sudah dibayar'}</p></h1>
+                                    <div className="grid grid-cols-2 gap-3 mb-5">
+                                        <div className="flex flex-col gap-3">
+                                            <div className={`px-3 py-2 rounded-md ${order.confirmed === "True" ? 'bg-green-600' : 'bg-[#FF2E2E]'}`}>
+                                                <h1 className="font-jua text-white">Status : {order.confirmed === "False" ? 'Belum di konfirmasi' : 'Terkonfirmasi'}</h1>
+                                            </div>
+                                            <div className={`px-3 py-2 rounded-md ${order.paid === "True" ? 'bg-green-600' : 'bg-[#FF2E2E]'}`}>
+                                                <h1 className={`font-jua text-white ${order.confirmed === "True" ? "block" : 'hidden'}`}>Status pembayaran : {order.paid === "False" ? 'Belum dibayar' : 'Sudah dibayar'}</h1>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <h1 className="font-jua text-white">Tanggal order : {order.created_at.slice(0, 10)}</h1>
+                                            <h1 className="font-jua text-white">Total harga : Rp{order.price}</h1>
+                                        </div>
+                                    </div>
+                                    <button onClick={() => toggleModal(order.id)} className={`px-3 py-2 rounded-md font-jua text-white bg-cyan-500 mt-3 mb-3 ${order.confirmed === "True" ? 'block' : 'hidden'}`}>{proof && proof.some(item => item.order_id === order.id) ? 'Bukti pembayaran' : 'Upload bukti pembayaran'}</button>
                                     <h1 className={`font-jua text-white ${order.paid === "True" ? "block" : "hidden"}`}>Produk akan segera dikirim ke alamat yang telah anda pilih</h1>
-                                    <button onClick={() => toggleModal(order.id)} className={`px-3 py-2 rounded-md font-jua text-white bg-[#FF2E2E] mt-3 ${order.confirmed === "True" ? 'block' : 'hidden'}`}>{proof && proof.some(item => item.order_id === order.id)  ? 'Bukti pembayaran' : 'Upload bukti pembayaran'}</button>
                                     {
                                         modal &&
                                         <div className="bg-black/50 h-full min-h-screen w-full z-30 fixed flex top-0 left-0 modal justify-center items-center">
@@ -167,7 +177,7 @@ export default function Order() {
                                                 <h1 className={`${proof && proof.some(item => item.order_id === modal) ? 'hidden' : 'block'}`}>Silahkan upload bukti pembayaran :</h1>
                                                 <input type="file" className={`file:bg-white file:border-none hover:file:bg-slate-300 file:transform file:transition-all file:duration-200 file:rounded-md ${proof && proof.some(item => item.order_id === modal) ? 'hidden' : 'block'}`} onChange={handleFileChange} />
                                                 {proof && proof.some(item => item.order_id === modal) &&
-                                                <img src={"/storage/" + proofImage(modal)} className="min-w-56 max-w-96"/>
+                                                    <img src={"/storage/" + proofImage(modal)} className="min-w-56 max-w-96" />
                                                 }
                                                 <button onClick={() => uploadFile(order.user.name, modal)} className={`${proof && proof.some(item => item.order_id === modal) ? 'hidden' : 'block'} px-3 py-2 rounded-md font-jua text-[#FF2E2E] bg-[#FFB42D] mt-3`}>Upload</button>
                                             </div>
