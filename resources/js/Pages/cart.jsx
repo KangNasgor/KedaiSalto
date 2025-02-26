@@ -48,7 +48,6 @@ export default function Cart() {
         else {
             clearInterval(intervalRef.current);
         }
-
         return () => clearInterval(intervalRef.current);
     }, [loggedIn]);
 
@@ -64,7 +63,7 @@ export default function Cart() {
         }
     }, [cartItems]);
 
-    const updateProductQuantity = (item_id, newQuantity) => {
+    const updateProductQuantity = (item_id, newQuantity) => { // function untuk meng-update kuantitas dari produk yang dipilih
         if (newQuantity < 0) return;
         try {
             setProductQuantities(prev => ({

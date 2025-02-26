@@ -15,4 +15,10 @@ class Order extends Model
     public function order_item(){
         return $this->hasMany(Order_item::class, 'order_id', 'id');
     }
+    public function promo_code(){
+        return $this->belongsTo(Promo_code::class, 'promo_code_id', 'id');
+    }
+    public function payment_proof(){
+        return $this->hasOne(Payment_proof::class, 'payment_proof_id', 'id');
+    }
 }

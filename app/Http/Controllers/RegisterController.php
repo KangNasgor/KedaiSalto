@@ -13,25 +13,31 @@ class RegisterController extends Controller
         return Inertia::render('register');
     }
     public function register(Request $req){
-        if(User::where('email', $req['email'])->where('id', '!=', $req['id'])->first()){
+        $data = $req->validate([
+            'email' => 'email|required',
+            'password' => 'min:8|required',
+            'notelp' => 'required',
+            'address' => 'required',
+            'name' => 'string|required'
+        ]);
+        if(User::where('email', $data['email'])->where('id', '!=', $data['id'])->first()){
             return response()->json([
                 'message' => 'Email yang anda gunakan sudah terhubung pada akun lain.'
             ]);
         }
 
-        if(User::where('notelp', $req['notelp'])->where('id', '!=', $req['id'])->first()){
+        if(User::where('notelp', $data['notelp'])->where('id', '!=', $data['id'])->first()){
             return response()->json([
                 'message' => 'Nomor telepon yang anda gunakan sudah terhubung pada akun lain.'
             ]);
         }
         User::create([
-            'email' => $req->input('email'),
-            'name' => $req->input('name'),
-            'notelp' => $req->input('notelp'),
-            'address' => $req->input('address'),
-            'password' => Hash::make($req->input('password')),
+            'email' => $data['email'],
+            'name' => $data['name'],
+            'notelp' => $data['notelp'],
+            'address' => $data['address'],
+            'password' => Hash::make($data['password']),
         ]);
         return redirect()->route('login');
-
     }
 }

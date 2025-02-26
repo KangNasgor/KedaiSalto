@@ -10,6 +10,7 @@ import { useState } from 'react'
 import Swal from "sweetalert2";
 import Navbar from '../Pages/components/Navbar'
 import Sidebar from '../Pages/components/Sidebar'
+import axios from 'axios'
 
 export default function Register() {
     const [show, setShow] = useState(false);
@@ -30,12 +31,14 @@ export default function Register() {
         }));
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         try {
             e.preventDefault();
-            Inertia.post('/user/register/store', formData, {
+            const response = await axios.post('/user/register/store', formData, {
                 headers: {
                     "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').content,
+                    'Accept' : 'application/json',
+                    'Content-Type' : 'application/json',
                 },
             });
             Swal.fire({
@@ -51,7 +54,7 @@ export default function Register() {
         catch (error) {
             Swal.fire({
                 title: 'Gagal membuat akun!',
-                text: 'Coba lagi nanti.',
+                text: error.response.data.message,
                 icon: 'error',
                 confirmButtonText: 'OK',
                 confirmButtonColor: '#FF2E2E',

@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers\ClientController;
 
+use App\Http\Controllers\Controller;
 use App\Models\Cart;
-use Inertia\Inertia;
-use App\Models\Order;
 use App\Models\Cart_item;
+use App\Models\Order;
 use App\Models\Order_item;
 use App\Models\Promo_code;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
+use Inertia\Inertia;
 
 class CartController extends Controller
 {
@@ -26,8 +26,7 @@ class CartController extends Controller
                 $cartItems = [];
                 return Inertia::render('cart', compact('cartItems'));
             }
-        }
-        else {
+        } else {
             return Inertia::render('cart');
         }
     }
@@ -59,8 +58,7 @@ class CartController extends Controller
             return response()->json([
                 'message' => 'Berhasil menambahkan produk kedalam keranjang.',
             ], 200);
-        }
-        else{
+        } else {
             $data = $req->validate([
                 'product_id' => 'required|integer',
                 'quantity' => 'integer|required',
@@ -107,20 +105,29 @@ class CartController extends Controller
         $cart = Cart::where('user_id', $data['user_id'])->first();
 
         $price = $data['price'];
-
+        $discountedPrice = $price;
+        $promo = Promo_code::where('code', $data['promo_code'])->first();
         if (!empty($data['promo_code'])) {
-            $promo = Promo_code::where('code', $data['promo_code'])->first();
             if ($promo) {
                 $discount = $promo->discount / 100;
-                $price -= $price * $discount;
+                $discountedPrice -= $price * $discount;
             }
         }
-
-        $order = Order::create([
-            'user_id' => $data['user_id'],
-            'price' => $price,
-            'created_at' => now(),
-        ]);
+        if ($discountedPrice === $price) {
+            $order = Order::create([
+                'user_id' => $data['user_id'],
+                'price' => $price,
+                'created_at' => now(),
+            ]);
+        } else {
+            $order = Order::create([
+                'user_id' => $data['user_id'],
+                'discountedPrice' => $discountedPrice,
+                'price' => $price,
+                'promo_code_id' => $promo->id,
+                'created_at' => now(),
+            ]);
+        }
 
         foreach ($data['products'] as $product) {
             Order_item::create([

@@ -14,10 +14,13 @@ class OrderController extends Controller
 {
     public function index(){
         if(Auth::guard('user')->check()){
-            $order = Order::with('user')->where('user_id', Auth::guard('user')->user()->getAuthIdentifier())->get();
-            $orderItem = Order_item::with('product')->whereIn('order_id', $order->pluck('id'))->get();
-            $proof = Payment_proof::with('order')->whereIn('order_id', $order->pluck('id'))->get();
-            return Inertia::render('order', compact('order', 'orderItem', 'proof'));
+            $order = Order::with('user', 'promo_code')->where('user_id', Auth::guard('user')->user()->getAuthIdentifier())->get();
+            if($order){
+                $orderItem = Order_item::with('product')->whereIn('order_id', $order->pluck('id'))->get();
+                $proof = Payment_proof::with('order')->whereIn('order_id', $order->pluck('id'))->get();
+                return Inertia::render('order', compact('order', 'orderItem', 'proof'));
+            }
+            return Inertia::render('order');
         }
         return Inertia::render('order');
     }

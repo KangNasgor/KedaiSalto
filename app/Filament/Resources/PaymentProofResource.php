@@ -2,16 +2,20 @@
 
 namespace App\Filament\Resources;
 
+use Filament\Forms;
+use Filament\Tables;
+use App\Models\Order;
+use Filament\Forms\Form;
+use Filament\Tables\Table;
+use App\Models\Payment_proof;
+use Filament\Resources\Resource;
+use Filament\Tables\Filters\Filter;
+use Filament\Tables\Filters\SelectFilter;
+use Illuminate\Database\Eloquent\Builder;
+use Filament\Tables\Filters\TrashedFilter;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\PaymentProofResource\Pages;
 use App\Filament\Resources\PaymentProofResource\RelationManagers;
-use App\Models\Payment_proof;
-use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
-use Filament\Tables;
-use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class PaymentProofResource extends Resource
 {
@@ -40,14 +44,23 @@ class PaymentProofResource extends Resource
                 Tables\Columns\ImageColumn::make('image')->label('Image'),
             ])
             ->filters([
-                //
+                TrashedFilter::make(),
+                Tables\Filters\SelectFilter::make('order_id')->label('Order ID')->options(
+                    Payment_proof::with('order')->select('order_id')->get()->mapWithKeys(fn($proof) =>
+                        [$proof->order->id => $proof->order->id]
+                    )->toArray(),
+                )->default(request('order_id')),
             ])
             ->actions([
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\DeleteAction::make()->after(function (Payment_proof $record){}),
+                Tables\Actions\ForceDeleteAction::make(),
+                Tables\Actions\RestoreAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\ForceDeleteBulkAction::make(),
+                    Tables\Actions\RestoreBulkAction::make(),
                 ]),
             ]);
     }

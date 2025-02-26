@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowRight, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { faArrowRight, faArrowLeft, faUser } from "@fortawesome/free-solid-svg-icons";
 import Aos from "aos";
 import 'aos/dist/aos.css'
 
@@ -36,56 +36,37 @@ export default function Testimonial() {
     }
 
     return (
-        <div className="h-screen pt-28 bg-[#FFB42D]">
+        <div className="h-screen py-32 bg-[#FFB42D]">
             <h1 className="text-center text-3xl font-jua text-white font-semibold tracking-wide mb-5" data-aos="fade-right" data-aos-duration="500">Apa kata pelanggan kami?</h1>
             <div className="w-11/12 overflow-hidden mx-auto bg-[#e69f20] rounded-lg py-10 relative" data-aos="fade-up" data-aos-duration="500"> {/* Visible Div for user, this is the container of the carousel */}
                 <div className="flex transform transition-all duration-300 carousel-item"> {/** This div contains all carousel children, the div is moved left and right to simulate carousel */}
                     <div className="min-w-full carousel-child">
                         <div className="bg-[#FF2E2E] mx-auto w-11/12 rounded-md p-5 grid grid-cols-3 justify-center gap-5">
                             <div className="bg-white p-3 rounded-md">
-                                <img src="/asset/admetal.jpg" className="object-cover object-center w-32 h-32 rounded-full mx-auto" />
-                                <h1 className="font-jua text-[#FF2E2E] w-fit mx-auto text-lg font-semibold tracking-wide">Adi Rabbani</h1>
+                                <div className="bg-black py-4 px-5 mb-5 rounded-full w-fit mx-auto">
+                                    <FontAwesomeIcon icon={faUser} className="text-3xl text-white " />
+                                </div>
+                                <h1 className="font-jua text-[#FF2E2E] w-fit mx-auto text-lg font-semibold tracking-wide">Taka</h1>
                                 <p className="font-jua text-[#FF2E2E] text-center text-sm">
-                                    "Saya selalu jadi pelanggan setia Kedai Salto! Dumpling-nya enak banget, es lumut-nya juga segar. Pokoknya, tempat ini jadi favorit banget deh buat nongkrong sambil nyemil."
+                                    Mantep, sedap masakannya, rekomendasi banget deh
                                 </p>
                             </div>
                             <div className="bg-white p-3 rounded-md">
-                                <img src="/asset/jijel.jpg" className="object-cover object-center w-32 h-32 rounded-full mx-auto" />
-                                <h1 className="font-jua text-[#FF2E2E] w-fit mx-auto text-lg font-semibold tracking-wide">GISELLE</h1>
+                                <div className="bg-black py-4 px-5 mb-5 rounded-full w-fit mx-auto">
+                                    <FontAwesomeIcon icon={faUser} className="text-3xl text-white " />
+                                </div>
+                                <h1 className="font-jua text-[#FF2E2E] w-fit mx-auto text-lg font-semibold tracking-wide">Intan Kusuma</h1>
                                 <p className="font-jua text-[#FF2E2E] text-center text-sm">
-                                    "너무 맛있어요! 다음에 또 먹고 싶어요~" (Ini enak banget! Mau makan lagi lain kali~)
+                                    Dimsumnya aku sekali coba langsung cocok di kedai salto
                                 </p>
                             </div>
                             <div className="bg-white p-3 rounded-md">
-                                <img src="/asset/prx.jpg" className="object-cover object-center w-32 h-32 rounded-full mx-auto" />
-                                <h1 className="font-jua text-[#FF2E2E] w-fit mx-auto text-lg font-semibold tracking-wide">PRX f0rsaken</h1>
+                                <div className="bg-black py-4 px-5 mb-5 rounded-full w-fit mx-auto">
+                                    <FontAwesomeIcon icon={faUser} className="text-3xl text-white " />
+                                </div>
+                                <h1 className="font-jua text-[#FF2E2E] w-fit mx-auto text-lg font-semibold tracking-wide">M Ana</h1>
                                 <p className="font-jua text-[#FF2E2E] text-center text-sm">
-                                    "Bro, Kedai Salto tuh beneran next level! Dumpling-nya legit enak, mashed potatoes-nya juga lembut banget. Kalau lagi butuh energi sebelum main, makanan di sini sih wajib banget! EZ win kalau udah makan di Kedai Salto."
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="min-w-full carousel-child">
-                        <div className="bg-[#FF2E2E] w-11/12 mx-auto rounded-md p-5 grid grid-cols-3 justify-center gap-5">
-                            <div className="bg-white p-3 rounded-md">
-                                <img src="/asset/ningning.jpg" className="object-cover object-center w-32 h-32 rounded-full mx-auto" />
-                                <h1 className="font-jua text-[#FF2E2E] w-fit mx-auto text-lg font-semibold tracking-wide">NINGNING</h1>
-                                <p className="font-jua text-[#FF2E2E] text-center text-sm">
-                                    "진짜 맛있다! 진짜 최고야~" (Beneran enak banget! Beneran yang terbaik~)
-                                </p>
-                            </div>
-                            <div className="bg-white p-3 rounded-md">
-                                <img src="/asset/darren.jpg" className="object-cover object-center w-32 h-32 rounded-full mx-auto" />
-                                <h1 className="font-jua text-[#FF2E2E] w-fit mx-auto text-lg font-semibold tracking-wide">IShowSpeed</h1>
-                                <p className="font-jua text-[#FF2E2E] text-center text-sm">
-                                    "YO CHAT! I just tried Kedai Salto and OMG—THIS STUFF IS CRAZY!!!🔥🔥 Dumplings? BUSSIN’. Es lumut? REFRESHING AS HELL! WOOOO!!! 10/10, W TESTIMONIAL, W FOOD, W INDONESIA!!! LET’S GOOOOOO!!!"
-                                </p>
-                            </div>
-                            <div className="bg-white p-3 rounded-md">
-                                <img src="/asset/jokowi.jpg" className="object-cover object-center w-32 h-32 rounded-full mx-auto" />
-                                <h1 className="font-jua text-[#FF2E2E] w-fit mx-auto text-lg font-semibold tracking-wide">Joko Widodo</h1>
-                                <p className="font-jua text-[#FF2E2E] text-center text-sm">
-                                    "Kedai Salto ini makanannya enak sekali. Dumpling-nya gurih, es lumut-nya segar. Harganya juga terjangkau, cocok untuk semua kalangan. Saya rasa ini bisa jadi salah satu kuliner favorit masyarakat. Maju terus UMKM Indonesia!"
+                                    Enak banget dimsumnyaa
                                 </p>
                             </div>
                         </div>
@@ -93,24 +74,30 @@ export default function Testimonial() {
                     <div className="min-w-full carousel-child">
                         <div className="bg-[#FF2E2E] w-11/12 mx-auto rounded-md p-5 grid grid-cols-3 justify-center gap-5">
                             <div className="bg-white p-3 rounded-md">
-                                <img src="/asset/gojosaturujpg.jpg" className="object-cover object-center w-32 h-32 rounded-full mx-auto" />
-                                <h1 className="font-jua text-[#FF2E2E] w-fit mx-auto text-lg font-semibold tracking-wide">M.Yahya Abdurrohim</h1>
+                                <div className="bg-black py-4 px-5 mb-5 rounded-full w-fit mx-auto">
+                                    <FontAwesomeIcon icon={faUser} className="text-3xl text-white " />
+                                </div>
+                                <h1 className="font-jua text-[#FF2E2E] w-fit mx-auto text-lg font-semibold tracking-wide">Bu Anton</h1>
                                 <p className="font-jua text-[#FF2E2E] text-center text-sm">
-                                    "Kedai Salto tuh kayak tempat makan yang nggak pernah gagal bikin happy. Mashed potatoes-nya lembut dan bumbu-nya pas. Harganya juga ramah di kantong, jadi sering mampir."
+                                    Ayam terasinya enak sekali dengan nasi anget, pas
                                 </p>
                             </div>
                             <div className="bg-white p-3 rounded-md">
-                                <img src="/asset/winteo.jpg" className="object-cover object-center w-32 h-32 rounded-full mx-auto" />
-                                <h1 className="font-jua text-[#FF2E2E] w-fit mx-auto text-lg font-semibold tracking-wide">WINTER</h1>
+                                <div className="bg-black py-4 px-5 mb-5 rounded-full w-fit mx-auto">
+                                    <FontAwesomeIcon icon={faUser} className="text-3xl text-white " />
+                                </div>
+                                <h1 className="font-jua text-[#FF2E2E] w-fit mx-auto text-lg font-semibold tracking-wide">Mama Rizka Maulida</h1>
                                 <p className="font-jua text-[#FF2E2E] text-center text-sm">
-                                    "와~ 이거 진짜 대박이에요! 덤플링 너무 촉촉하고 맛있어요. 그리고 에스 루뭇은 진짜 상쾌해요! 다음에 또 먹고 싶어요~ 꼭 다시 올게요! 💙" (Wow~ Ini beneran luar biasa! Dumpling-nya super juicy dan enak banget. Terus es lumut-nya segar banget! Mau makan lagi lain kali~ Pasti bakal datang lagi! 💙)
+                                    Pulang kerja capek dan laper, maem kroket panas-panas barusan digoreng rasanya maknyoosss, mantapp
                                 </p>
                             </div>
                             <div className="bg-white p-3 rounded-md">
-                                <img src="/asset/gw.jpg" className="object-cover object-center w-32 h-32 rounded-full mx-auto" />
-                                <h1 className="font-jua text-[#FF2E2E] w-fit mx-auto text-lg font-semibold tracking-wide">KangNasgor</h1>
+                                <div className="bg-black py-4 px-5 mb-5 rounded-full w-fit mx-auto">
+                                    <FontAwesomeIcon icon={faUser} className="text-3xl text-white " />
+                                </div>
+                                <h1 className="font-jua text-[#FF2E2E] w-fit mx-auto text-lg font-semibold tracking-wide">Bapak Gumilang</h1>
                                 <p className="font-jua text-[#FF2E2E] text-center text-sm">
-                                    "Heed my words-KedaiSalto is a place of fleeting warmth in this accursed land, It serveth a feast most delightful, A meal fit for the Ashen One."
+                                    Chicken salted egg nya juara, ayamnya empuk, bumbunya meresap, pokoke uenak poll
                                 </p>
                             </div>
                         </div>

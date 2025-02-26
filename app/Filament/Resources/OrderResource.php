@@ -2,24 +2,18 @@
 
 namespace App\Filament\Resources;
 
-use Filament\Forms;
-use App\Models\User;
-use Filament\Tables;
+use App\Filament\Resources\OrderResource\Pages;
 use App\Models\Order;
-use Livewire\Component;
-use Filament\Forms\Form;
-use Filament\Tables\Table;
-use Filament\Facades\Filament;
-use Filament\Resources\Resource;
-use Filament\Tables\Actions\Action;
-use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Form;
 use Filament\Notifications\Notification;
-use Illuminate\Database\Eloquent\Builder;
-use App\Filament\Resources\OrderResource\Pages;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-use App\Filament\Resources\OrderResource\RelationManagers;
+use Filament\Resources\Resource;
+use Filament\Tables;
+use Filament\Tables\Actions\Action;
+use Filament\Tables\Table;
+use Illuminate\Support\Facades\Auth;
 
 class OrderResource extends Resource
 {
@@ -36,7 +30,7 @@ class OrderResource extends Resource
         return $form
             ->schema([
                 Select::make('user_id')->required()->label('User')->options([
-                    User::all()->pluck('name', 'id')->toArray()
+                    User::all()->pluck('name', 'id')->toArray(),
                 ]),
                 TextInput::make('price')->required()->label('Price')->numeric()->prefix('Rp'),
                 Select::make('confirmed')->required()->label('Confirmed')->options([
@@ -57,6 +51,7 @@ class OrderResource extends Resource
                 Tables\Columns\TextColumn::make('id')->label('ID')->sortable(),
                 Tables\Columns\TextColumn::make('user.name')->label('User')->searchable()->sortable(),
                 Tables\Columns\TextColumn::make('price')->label('Price')->searchable(),
+                Tables\Columns\TextColumn::make('discountedPrice')->label('Discounted Price')->searchable(),
                 Tables\Columns\BadgeColumn::make('confirmed')->label('Confirmed')->searchable()->colors([
                     'primary' => 'True',
                     'danger' => 'False',
@@ -67,48 +62,53 @@ class OrderResource extends Resource
                 ]),
             ])
             ->filters([
-                //
+                Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
                 Action::make('Confirm')->visible(
-                    fn ($record) => $record->confirmed === "False"
+                    fn($record) => $record->confirmed === "False"
                 )->action(fn($record) => self::confirmOrder($record))->icon('heroicon-o-check'),
                 Action::make('Cancel')->color('danger')->visible(
                     fn($record) => $record->confirmed === "True"
                 )->action(fn($record) => self::cancelOrder($record))->icon('heroicon-o-x-circle'),
+                Tables\Actions\ForceDeleteAction::make(),
+                Tables\Actions\RestoreAction::make(),
+                Tables\Actions\Action::make('Proof')->icon('heroicon-o-receipt-refund')->url(fn($record) => route('filament.admin.resources.payment-proofs.index', ['order_id' => $record->id])),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\ForceDeleteBulkAction::make(),
+                    Tables\Actions\RestoreBulkAction::make(),
                 ]),
             ]);
     }
-    public static function confirmOrder($order){
+    public static function confirmOrder($order)
+    {
         $order->load('order_item.product');
-        foreach($order->order_item as $item){
+        foreach ($order->order_item as $item) {
             $product = $item->product;
-            if($product && $product->stock >= $order->quantity){
+            if ($product && $product->stock >= $order->quantity) {
                 $product->decrement('stock', $item->quantity);
-            }
-            else{
+            } else {
                 Notification::make()->danger()->title('Error');
             }
         }
         $order->update([
-            'confirmed' => "True"
+            'confirmed' => "True",
         ]);
         Notification::make()->success()->title('Order confirmed')->send();
     }
-    public static function cancelOrder(Order $order){
+    public static function cancelOrder(Order $order)
+    {
         $order->load('order_item.product');
-        foreach($order->order_item as $item){
+        foreach ($order->order_item as $item) {
             $product = $item->product;
-            if($product){
+            if ($product) {
                 $product->increment('stock', $item->quantity);
-            }
-            else{
+            } else {
                 Notification::make()->danger()->title('Error saat cancel order')->send();
             }
         }
